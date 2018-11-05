@@ -1,8 +1,10 @@
 package net.licenta.model.util;
 
 import net.licenta.model.dto.AddressDTO;
+import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.dto.UserPatientDTO;
 import net.licenta.model.entity.Address;
+import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.entity.UserPatient;
 
 public class DataModelTransformer {
@@ -54,5 +56,51 @@ public class DataModelTransformer {
     userPatient.setAddress(address);
 
     return userPatient;
+  }
+  
+  public static UserDoctorDTO fromDoctorToDoctorDTO(UserDoctor userDoctor) {
+    UserDoctorDTO userDoctorDTO = new UserDoctorDTO();
+    userDoctorDTO.setId(userDoctor.getId());
+    userDoctorDTO.setFirstName(userDoctor.getFirstName());
+    userDoctorDTO.setLastName(userDoctor.getLastName());
+    userDoctorDTO.setUserName(userDoctor.getUserName());
+    userDoctorDTO.setEmail(userDoctor.getEmail());
+    userDoctorDTO.setPhoneNumber(userDoctor.getPhoneNumber());
+    userDoctorDTO.setPassword(userDoctor.getPassword());
+
+    AddressDTO addressDTO = new AddressDTO();
+    addressDTO.setCountryName(userDoctor.getAddress().getCountryName());
+    addressDTO.setPostalCode(userDoctor.getAddress().getPostalCode());
+    addressDTO.setCity(userDoctor.getAddress().getCity());
+    addressDTO.setRegion(userDoctor.getAddress().getRegion());
+    addressDTO.setStreet(userDoctor.getAddress().getStreet());
+    addressDTO.setStreetNumber(userDoctor.getAddress().getStreetNumber());
+
+    userDoctorDTO.setAddressDTO(addressDTO);
+
+    return userDoctorDTO;
+  }
+  
+  public static UserDoctor fromDoctorDTOToDoctor(UserDoctorDTO userDoctorDTO) {
+    UserDoctor userDoctor = new UserDoctor();
+    userDoctor.setId(userDoctorDTO.getId());
+    userDoctor.setFirstName(userDoctorDTO.getFirstName());
+    userDoctor.setLastName(userDoctorDTO.getLastName());
+    userDoctor.setUserName(userDoctorDTO.getUserName());
+    userDoctor.setEmail(userDoctorDTO.getEmail());
+    userDoctor.setPhoneNumber(userDoctorDTO.getPhoneNumber());
+    userDoctor.setPassword(userDoctorDTO.getPassword());
+
+    Address address = new Address();
+    address.setCountryName(userDoctorDTO.getAddressDTO().getCountryName());
+    address.setPostalCode(userDoctorDTO.getAddressDTO().getPostalCode());
+    address.setCity(userDoctorDTO.getAddressDTO().getCity());
+    address.setRegion(userDoctorDTO.getAddressDTO().getRegion());
+    address.setStreet(userDoctorDTO.getAddressDTO().getStreet());
+    address.setStreetNumber(userDoctorDTO.getAddressDTO().getStreetNumber());
+
+    userDoctor.setAddress(address);
+
+    return userDoctor;
   }
 }

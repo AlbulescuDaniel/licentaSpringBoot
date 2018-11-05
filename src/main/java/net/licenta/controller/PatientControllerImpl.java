@@ -101,7 +101,7 @@ public class PatientControllerImpl implements PatientController {
   @Override
   public ResponseEntity<HttpStatus> deletePatientById(@PathVariable Long id) {
     HttpStatus http = patientService.deletePatientById(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-    log.info("Delete user with id {}", id);
+    log.info("Delete patients with id {}", id);
     return new ResponseEntity<>(http);
   }
 
