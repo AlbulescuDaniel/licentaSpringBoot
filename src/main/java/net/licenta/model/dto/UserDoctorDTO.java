@@ -3,6 +3,8 @@ package net.licenta.model.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class UserDoctorDTO extends UserDTO{
   
   @NotNull(message = "{user.firstName.notNull}")
@@ -12,6 +14,11 @@ public class UserDoctorDTO extends UserDTO{
   @NotNull(message = "{user.lastName.notNull}")
   @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z ]{2,64}\\b$", message = "{user.lastName.format}")
   private String lastName;
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("firstName", firstName).append("lastName", lastName).toString();
+  }
 
   public String getFirstName() {
     return firstName;

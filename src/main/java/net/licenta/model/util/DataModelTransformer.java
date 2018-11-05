@@ -3,9 +3,11 @@ package net.licenta.model.util;
 import net.licenta.model.dto.AddressDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.dto.UserPatientDTO;
+import net.licenta.model.dto.UserPharmacyDTO;
 import net.licenta.model.entity.Address;
 import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.entity.UserPatient;
+import net.licenta.model.entity.UserPharmacy;
 
 public class DataModelTransformer {
 
@@ -34,7 +36,7 @@ public class DataModelTransformer {
 
     return userPatientDTO;
   }
-  
+
   public static UserPatient fromPatientDTOToPatient(UserPatientDTO userPatientDTO) {
     UserPatient userPatient = new UserPatient();
     userPatient.setId(userPatientDTO.getId());
@@ -57,7 +59,7 @@ public class DataModelTransformer {
 
     return userPatient;
   }
-  
+
   public static UserDoctorDTO fromDoctorToDoctorDTO(UserDoctor userDoctor) {
     UserDoctorDTO userDoctorDTO = new UserDoctorDTO();
     userDoctorDTO.setId(userDoctor.getId());
@@ -80,7 +82,7 @@ public class DataModelTransformer {
 
     return userDoctorDTO;
   }
-  
+
   public static UserDoctor fromDoctorDTOToDoctor(UserDoctorDTO userDoctorDTO) {
     UserDoctor userDoctor = new UserDoctor();
     userDoctor.setId(userDoctorDTO.getId());
@@ -102,5 +104,49 @@ public class DataModelTransformer {
     userDoctor.setAddress(address);
 
     return userDoctor;
+  }
+
+  public static UserPharmacyDTO fromPharmacyToPharmacyDTO(UserPharmacy userPharmacy) {
+    UserPharmacyDTO userPharmacyDTO = new UserPharmacyDTO();
+    userPharmacyDTO.setId(userPharmacy.getId());
+    userPharmacyDTO.setName(userPharmacy.getName());
+    userPharmacyDTO.setUserName(userPharmacy.getUserName());
+    userPharmacyDTO.setEmail(userPharmacy.getEmail());
+    userPharmacyDTO.setPhoneNumber(userPharmacy.getPhoneNumber());
+    userPharmacyDTO.setPassword(userPharmacy.getPassword());
+
+    AddressDTO addressDTO = new AddressDTO();
+    addressDTO.setCountryName(userPharmacy.getAddress().getCountryName());
+    addressDTO.setPostalCode(userPharmacy.getAddress().getPostalCode());
+    addressDTO.setCity(userPharmacy.getAddress().getCity());
+    addressDTO.setRegion(userPharmacy.getAddress().getRegion());
+    addressDTO.setStreet(userPharmacy.getAddress().getStreet());
+    addressDTO.setStreetNumber(userPharmacy.getAddress().getStreetNumber());
+
+    userPharmacyDTO.setAddressDTO(addressDTO);
+
+    return userPharmacyDTO;
+  }
+
+  public static UserPharmacy fromPharmacyDTOToPharmacy(UserPharmacyDTO userPharmacyDTO) {
+    UserPharmacy userPharmacy = new UserPharmacy();
+    userPharmacy.setId(userPharmacyDTO.getId());
+    userPharmacy.setName(userPharmacyDTO.getName());
+    userPharmacy.setUserName(userPharmacyDTO.getUserName());
+    userPharmacy.setEmail(userPharmacyDTO.getEmail());
+    userPharmacy.setPhoneNumber(userPharmacyDTO.getPhoneNumber());
+    userPharmacy.setPassword(userPharmacyDTO.getPassword());
+
+    Address address = new Address();
+    address.setCountryName(userPharmacyDTO.getAddressDTO().getCountryName());
+    address.setPostalCode(userPharmacyDTO.getAddressDTO().getPostalCode());
+    address.setCity(userPharmacyDTO.getAddressDTO().getCity());
+    address.setRegion(userPharmacyDTO.getAddressDTO().getRegion());
+    address.setStreet(userPharmacyDTO.getAddressDTO().getStreet());
+    address.setStreetNumber(userPharmacyDTO.getAddressDTO().getStreetNumber());
+
+    userPharmacy.setAddress(address);
+
+    return userPharmacy;
   }
 }

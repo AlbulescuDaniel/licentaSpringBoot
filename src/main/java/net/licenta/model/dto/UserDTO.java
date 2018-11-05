@@ -5,7 +5,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
 
-public class UserDTO {
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+public class UserDTO implements Comparable<UserDTO> {
   private Long id;
 
   @NotNull(message = "{user.userName.notNull}")
@@ -27,6 +32,32 @@ public class UserDTO {
   @NotNull(message = "{address.notNull}")
   private AddressDTO addressDTO;
   
+  @Override
+  public boolean equals(final Object other) {
+    if (!(other instanceof UserDTO)) {
+      return false;
+    }
+    UserDTO castOther = (UserDTO)other;
+    return new EqualsBuilder().append(id, castOther.id).append(userName, castOther.userName).append(email, castOther.email).append(phoneNumber, castOther.phoneNumber)
+        .append(password, castOther.password).append(addressDTO, castOther.addressDTO).isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(id).append(userName).append(email).append(phoneNumber).append(password).append(addressDTO).toHashCode();
+  }
+
+  @Override
+  public int compareTo(final UserDTO other) {
+    return new CompareToBuilder().append(userName, other.userName).append(email, other.email).append(phoneNumber, other.phoneNumber).append(password, other.password)
+        .append(addressDTO, other.addressDTO).toComparison();
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("userName", userName).append("email", email).append("phoneNumber", phoneNumber).append("password", password).append("addressDTO", addressDTO).toString();
+  }
+
   public Long getId() {
     return id;
   }

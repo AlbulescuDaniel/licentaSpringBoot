@@ -3,7 +3,12 @@ package net.licenta.model.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-public class AddressDTO {
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+public class AddressDTO implements Comparable<AddressDTO> {
 
    @Pattern(regexp ="^\\b(?!.*?\\s{2})[A-Za-z ]{2,100}\\b$", message ="{address.countryName.format}")
    @NotNull(message = "{address.countryName.notNull}")
@@ -28,6 +33,33 @@ public class AddressDTO {
    @Pattern(regexp = "^[A-Za-z0-9]{1,5}$", message = "{address.streetNumber.format}")
    @NotNull(message = "{address.streetNumber.notNull}")
   private String streetNumber;
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("countryName", countryName).append("postalCode", postalCode).append("city", city).append("region", region).append("street", street)
+        .append("streetNumber", streetNumber).toString();
+  }
+
+  @Override
+  public boolean equals(final Object other) {
+    if (!(other instanceof AddressDTO)) {
+      return false;
+    }
+    AddressDTO castOther = (AddressDTO)other;
+    return new EqualsBuilder().append(countryName, castOther.countryName).append(postalCode, castOther.postalCode).append(city, castOther.city).append(region, castOther.region)
+        .append(street, castOther.street).append(streetNumber, castOther.streetNumber).isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(countryName).append(postalCode).append(city).append(region).append(street).append(streetNumber).toHashCode();
+  }
+
+  @Override
+  public int compareTo(final AddressDTO other) {
+    return new CompareToBuilder().append(countryName, other.countryName).append(postalCode, other.postalCode).append(city, other.city).append(region, other.region).append(street, other.street)
+        .append(streetNumber, other.streetNumber).toComparison();
+  }
 
   public String getCountryName() {
     return countryName;
