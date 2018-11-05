@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import net.licenta.model.dto.UserDoctorDTO;
@@ -14,7 +17,7 @@ import net.licenta.model.util.DataModelTransformer;
 import net.licenta.repository.DoctorRepository;
 
 @Service
-public class DoctorServiceImpl implements DoctorService {
+public class DoctorServiceImpl implements  UserDetailsService, DoctorService {
 
   @Autowired
   DoctorRepository doctorRepository;
@@ -59,5 +62,11 @@ public class DoctorServiceImpl implements DoctorService {
   public Boolean deleteAllDoctors() {
     doctorRepository.deleteAll();
     return doctorRepository.count() == 0L;
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

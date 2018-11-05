@@ -5,6 +5,11 @@ public class Constants {
   private Constants() {
   }
   
+  public static final long EXPIRATION_TIME = 840_000_000; // 10 days
+  public static final String SECRET = "{noop}ThisIsASecret";
+  public static final String TOKEN_PREFIX = "Bearer";
+  public static final String HEADER_STRING = "Authorization";
+  
   public static final String MESSAGE_BUNDLE = "messages";
   public static final String NOT_FOUND = "Not found";
   public static final String BAD_REQUEST = "Bad request";
