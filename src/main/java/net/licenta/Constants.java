@@ -15,5 +15,6 @@ public class Constants {
   public static final String BAD_REQUEST = "Bad request";
   
   public static final String BUNDLE_ROLE_FIND_BY_CODE = "role.find.ByCode";
+  public static final String BUNDLE_USER_ID_NOT_FOUND = "user.find.username";
 
 }

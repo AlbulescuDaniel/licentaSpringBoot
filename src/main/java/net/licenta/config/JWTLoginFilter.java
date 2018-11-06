@@ -16,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.licenta.model.entity.User;
+import net.licenta.model.entity.UserDoctor;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -29,8 +29,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
   public Authentication attemptAuthentication(
       HttpServletRequest req, HttpServletResponse res)
       throws IOException, ServletException {
-    User creds = new ObjectMapper()
-        .readValue(req.getInputStream(), User.class);
+    UserDoctor creds = new ObjectMapper()
+        .readValue(req.getInputStream(), UserDoctor.class);
     return getAuthenticationManager().authenticate(
         new UsernamePasswordAuthenticationToken(
             creds.getUserName(),

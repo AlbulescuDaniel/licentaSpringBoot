@@ -6,9 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import net.licenta.model.dto.UserPharmacyDTO;
@@ -17,7 +14,7 @@ import net.licenta.model.util.DataModelTransformer;
 import net.licenta.repository.PharmacyRepository;
 
 @Service
-public class PharmacyServiceImpl implements UserDetailsService, PharmacyService {
+public class PharmacyServiceImpl implements PharmacyService {
 
   @Autowired
   PharmacyRepository pharmacyRepository;
@@ -62,11 +59,5 @@ public class PharmacyServiceImpl implements UserDetailsService, PharmacyService 
   public Boolean deleteAllPharmacies() {
     pharmacyRepository.deleteAll();
     return pharmacyRepository.count() == 0L;
-  }
-
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    // TODO Auto-generated method stub
-    return null;
   }
 }
