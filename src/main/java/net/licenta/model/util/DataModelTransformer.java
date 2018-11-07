@@ -1,10 +1,12 @@
 package net.licenta.model.util;
 
 import net.licenta.model.dto.AddressDTO;
+import net.licenta.model.dto.DrugDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.dto.UserPatientDTO;
 import net.licenta.model.dto.UserPharmacyDTO;
 import net.licenta.model.entity.Address;
+import net.licenta.model.entity.Drug;
 import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.entity.UserPatient;
 import net.licenta.model.entity.UserPharmacy;
@@ -148,5 +150,27 @@ public class DataModelTransformer {
     userPharmacy.setAddress(address);
 
     return userPharmacy;
+  }
+
+  public static DrugDTO fromDrugToDrugDTO(Drug drug) {
+    DrugDTO drugDTO = new DrugDTO();
+    drugDTO.setId(drug.getId());
+    drugDTO.setActiveComponent(drug.getActiveComponent());
+    drugDTO.setDescription(drug.getDescription());
+    drugDTO.setManufacturer(drug.getManufacturer());
+    drugDTO.setName(drug.getName());
+
+    return drugDTO;
+  }
+
+  public static Drug fromDrugDTOToDrug(DrugDTO drugDTO) {
+    Drug drug = new Drug();
+    drug.setId(drugDTO.getId());
+    drug.setActiveComponent(drugDTO.getActiveComponent());
+    drug.setDescription(drugDTO.getDescription());
+    drug.setManufacturer(drugDTO.getManufacturer());
+    drug.setName(drugDTO.getName());
+
+    return drug;
   }
 }
