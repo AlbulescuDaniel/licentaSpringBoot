@@ -54,7 +54,6 @@ public class LoginService implements UserDetailsService {
 
   private Set<SimpleGrantedAuthority> getAuthority(User user) {
     Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-    System.err.println(user.getRoleType().toString());
     authorities.add(new SimpleGrantedAuthority(user.getRoleType().toString()));
     return authorities;
   }
