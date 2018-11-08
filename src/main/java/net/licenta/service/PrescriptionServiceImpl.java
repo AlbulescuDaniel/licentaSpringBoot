@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import net.licenta.Constants;
 import net.licenta.error.ErrorDetailsNotFound;
@@ -18,6 +19,7 @@ import net.licenta.model.util.DataModelTransformer;
 import net.licenta.repository.DrugRepository;
 import net.licenta.repository.PrescriptionRepository;
 
+@Service
 public class PrescriptionServiceImpl implements PrescriptionService {
 
   @Autowired
