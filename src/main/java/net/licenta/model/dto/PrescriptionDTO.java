@@ -5,18 +5,18 @@ import java.util.List;
 
 public class PrescriptionDTO {
   
-  private Long idPrescription;
+  private Long id;
   private String diagnostic;
   private Integer days;
   private LocalDate datePrescripted;
   private List<PrescriptionDrugDTO> prescriptionDrugsDTO;
 
-  public Long getIdPrescription() {
-    return idPrescription;
+  public Long getId() {
+    return id;
   }
 
-  public void setIdPrescription(Long idPrescription) {
-    this.idPrescription = idPrescription;
+  public void setId(Long idPrescription) {
+    this.id = idPrescription;
   }
 
   public String getDiagnostic() {

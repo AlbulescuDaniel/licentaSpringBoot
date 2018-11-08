@@ -19,7 +19,7 @@ public class Prescription {
   @Id
   @Column(name = "ID_PRESCRIPTION")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long idPrescription;
+  private Long id;
 
   @Column(name = "DIAGNOSTIC")
   private String diagnostic;
@@ -38,12 +38,12 @@ public class Prescription {
     prescriptionDrugs = new ArrayList<>();
   }
 
-  public Long getIdPrescription() {
-    return idPrescription;
+  public Long getId() {
+    return id;
   }
 
-  public void setIdPrescription(Long idPrescription) {
-    this.idPrescription = idPrescription;
+  public void setId(Long idPrescription) {
+    this.id = idPrescription;
   }
 
   public String getDiagnostic() {

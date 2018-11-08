@@ -1,12 +1,18 @@
 package net.licenta.model.util;
 
+import java.util.stream.Collectors;
+
 import net.licenta.model.dto.AddressDTO;
 import net.licenta.model.dto.DrugDTO;
+import net.licenta.model.dto.PrescriptionDTO;
+import net.licenta.model.dto.PrescriptionDrugDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.dto.UserPatientDTO;
 import net.licenta.model.dto.UserPharmacyDTO;
 import net.licenta.model.entity.Address;
 import net.licenta.model.entity.Drug;
+import net.licenta.model.entity.Prescription;
+import net.licenta.model.entity.PrescriptionDrug;
 import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.entity.UserPatient;
 import net.licenta.model.entity.UserPharmacy;
@@ -14,6 +20,29 @@ import net.licenta.model.entity.UserPharmacy;
 public class DataModelTransformer {
 
   private DataModelTransformer() {
+  }
+
+  public static AddressDTO fromAddressToAddressDTO(Address address) {
+    AddressDTO addressDTO = new AddressDTO();
+    addressDTO.setCountryName(address.getCountryName());
+    addressDTO.setPostalCode(address.getPostalCode());
+    addressDTO.setCity(address.getCity());
+    addressDTO.setRegion(address.getRegion());
+    addressDTO.setStreet(address.getStreet());
+
+    return addressDTO;
+  }
+
+  public static Address fromAddressDTOToAddress(AddressDTO addressDTO) {
+    Address address = new Address();
+    address.setCountryName(addressDTO.getCountryName());
+    address.setPostalCode(addressDTO.getPostalCode());
+    address.setCity(addressDTO.getCity());
+    address.setRegion(addressDTO.getRegion());
+    address.setStreet(addressDTO.getStreet());
+    address.setStreetNumber(addressDTO.getStreetNumber());
+
+    return address;
   }
 
   public static UserPatientDTO fromPatientToPatientDTO(UserPatient userPatient) {
@@ -25,16 +54,7 @@ public class DataModelTransformer {
     userPatientDTO.setEmail(userPatient.getEmail());
     userPatientDTO.setPhoneNumber(userPatient.getPhoneNumber());
     userPatientDTO.setPassword(userPatient.getPassword());
-
-    AddressDTO addressDTO = new AddressDTO();
-    addressDTO.setCountryName(userPatient.getAddress().getCountryName());
-    addressDTO.setPostalCode(userPatient.getAddress().getPostalCode());
-    addressDTO.setCity(userPatient.getAddress().getCity());
-    addressDTO.setRegion(userPatient.getAddress().getRegion());
-    addressDTO.setStreet(userPatient.getAddress().getStreet());
-    addressDTO.setStreetNumber(userPatient.getAddress().getStreetNumber());
-
-    userPatientDTO.setAddressDTO(addressDTO);
+    userPatientDTO.setAddressDTO(fromAddressToAddressDTO(userPatient.getAddress()));
 
     return userPatientDTO;
   }
@@ -48,16 +68,7 @@ public class DataModelTransformer {
     userPatient.setEmail(userPatientDTO.getEmail());
     userPatient.setPhoneNumber(userPatientDTO.getPhoneNumber());
     userPatient.setPassword(userPatientDTO.getPassword());
-
-    Address address = new Address();
-    address.setCountryName(userPatientDTO.getAddressDTO().getCountryName());
-    address.setPostalCode(userPatientDTO.getAddressDTO().getPostalCode());
-    address.setCity(userPatientDTO.getAddressDTO().getCity());
-    address.setRegion(userPatientDTO.getAddressDTO().getRegion());
-    address.setStreet(userPatientDTO.getAddressDTO().getStreet());
-    address.setStreetNumber(userPatientDTO.getAddressDTO().getStreetNumber());
-
-    userPatient.setAddress(address);
+    userPatient.setAddress(fromAddressDTOToAddress(userPatientDTO.getAddressDTO()));
 
     return userPatient;
   }
@@ -71,16 +82,7 @@ public class DataModelTransformer {
     userDoctorDTO.setEmail(userDoctor.getEmail());
     userDoctorDTO.setPhoneNumber(userDoctor.getPhoneNumber());
     userDoctorDTO.setPassword(userDoctor.getPassword());
-
-    AddressDTO addressDTO = new AddressDTO();
-    addressDTO.setCountryName(userDoctor.getAddress().getCountryName());
-    addressDTO.setPostalCode(userDoctor.getAddress().getPostalCode());
-    addressDTO.setCity(userDoctor.getAddress().getCity());
-    addressDTO.setRegion(userDoctor.getAddress().getRegion());
-    addressDTO.setStreet(userDoctor.getAddress().getStreet());
-    addressDTO.setStreetNumber(userDoctor.getAddress().getStreetNumber());
-
-    userDoctorDTO.setAddressDTO(addressDTO);
+    userDoctorDTO.setAddressDTO(fromAddressToAddressDTO(userDoctor.getAddress()));
 
     return userDoctorDTO;
   }
@@ -94,16 +96,7 @@ public class DataModelTransformer {
     userDoctor.setEmail(userDoctorDTO.getEmail());
     userDoctor.setPhoneNumber(userDoctorDTO.getPhoneNumber());
     userDoctor.setPassword(userDoctorDTO.getPassword());
-
-    Address address = new Address();
-    address.setCountryName(userDoctorDTO.getAddressDTO().getCountryName());
-    address.setPostalCode(userDoctorDTO.getAddressDTO().getPostalCode());
-    address.setCity(userDoctorDTO.getAddressDTO().getCity());
-    address.setRegion(userDoctorDTO.getAddressDTO().getRegion());
-    address.setStreet(userDoctorDTO.getAddressDTO().getStreet());
-    address.setStreetNumber(userDoctorDTO.getAddressDTO().getStreetNumber());
-
-    userDoctor.setAddress(address);
+    userDoctor.setAddress(fromAddressDTOToAddress(userDoctorDTO.getAddressDTO()));
 
     return userDoctor;
   }
@@ -116,16 +109,7 @@ public class DataModelTransformer {
     userPharmacyDTO.setEmail(userPharmacy.getEmail());
     userPharmacyDTO.setPhoneNumber(userPharmacy.getPhoneNumber());
     userPharmacyDTO.setPassword(userPharmacy.getPassword());
-
-    AddressDTO addressDTO = new AddressDTO();
-    addressDTO.setCountryName(userPharmacy.getAddress().getCountryName());
-    addressDTO.setPostalCode(userPharmacy.getAddress().getPostalCode());
-    addressDTO.setCity(userPharmacy.getAddress().getCity());
-    addressDTO.setRegion(userPharmacy.getAddress().getRegion());
-    addressDTO.setStreet(userPharmacy.getAddress().getStreet());
-    addressDTO.setStreetNumber(userPharmacy.getAddress().getStreetNumber());
-
-    userPharmacyDTO.setAddressDTO(addressDTO);
+    userPharmacyDTO.setAddressDTO(fromAddressToAddressDTO(userPharmacy.getAddress()));
 
     return userPharmacyDTO;
   }
@@ -138,16 +122,7 @@ public class DataModelTransformer {
     userPharmacy.setEmail(userPharmacyDTO.getEmail());
     userPharmacy.setPhoneNumber(userPharmacyDTO.getPhoneNumber());
     userPharmacy.setPassword(userPharmacyDTO.getPassword());
-
-    Address address = new Address();
-    address.setCountryName(userPharmacyDTO.getAddressDTO().getCountryName());
-    address.setPostalCode(userPharmacyDTO.getAddressDTO().getPostalCode());
-    address.setCity(userPharmacyDTO.getAddressDTO().getCity());
-    address.setRegion(userPharmacyDTO.getAddressDTO().getRegion());
-    address.setStreet(userPharmacyDTO.getAddressDTO().getStreet());
-    address.setStreetNumber(userPharmacyDTO.getAddressDTO().getStreetNumber());
-
-    userPharmacy.setAddress(address);
+    userPharmacy.setAddress(fromAddressDTOToAddress(userPharmacyDTO.getAddressDTO()));
 
     return userPharmacy;
   }
@@ -172,5 +147,49 @@ public class DataModelTransformer {
     drug.setName(drugDTO.getName());
 
     return drug;
+  }
+
+  public static PrescriptionDrug fromPrescriptionDrugDTOToPrescriptionDrug(PrescriptionDrugDTO prescriptionDrugDTO) {
+    PrescriptionDrug prescriptionDrug = new PrescriptionDrug();
+    prescriptionDrug.setId(prescriptionDrugDTO.getId());
+    prescriptionDrug.setChecked(prescriptionDrugDTO.getChecked());
+    prescriptionDrug.setDescription(prescriptionDrugDTO.getDescription());
+    prescriptionDrug.setPillsNumber(prescriptionDrugDTO.getPillsNumber());
+    prescriptionDrug.setDrug(fromDrugDTOToDrug(prescriptionDrugDTO.getDrugDTO()));
+
+    return prescriptionDrug;
+  }
+
+  public static PrescriptionDrugDTO fromPrescriptionDrugToPrescriptionDrugDTO(PrescriptionDrug prescriptionDrug) {
+    PrescriptionDrugDTO prescriptionDrugDTO = new PrescriptionDrugDTO();
+    prescriptionDrugDTO.setId(prescriptionDrug.getId());
+    prescriptionDrugDTO.setChecked(prescriptionDrug.getChecked());
+    prescriptionDrugDTO.setDescription(prescriptionDrug.getDescription());
+    prescriptionDrugDTO.setPillsNumber(prescriptionDrug.getPillsNumber());
+    prescriptionDrugDTO.setDrugDTO(fromDrugToDrugDTO(prescriptionDrug.getDrug()));
+
+    return prescriptionDrugDTO;
+  }
+
+  public static PrescriptionDTO fromPrescriptionToPrescriptionDTO(Prescription prescription) {
+    PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
+    prescriptionDTO.setId(prescription.getId());
+    prescriptionDTO.setDiagnostic(prescription.getDiagnostic());
+    prescriptionDTO.setDays(prescription.getDays());
+    prescriptionDTO.setDatePrescripted(prescription.getDatePrescripted());
+    prescriptionDTO.setPrescriptionDrugs(prescription.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugToPrescriptionDrugDTO).collect(Collectors.toList()));
+
+    return prescriptionDTO;
+  }
+
+  public static Prescription fromPrescriptionDTOToPrescription(PrescriptionDTO prescriptionDTO) {
+    Prescription prescription = new Prescription();
+    prescription.setId(prescriptionDTO.getId());
+    prescription.setDiagnostic(prescriptionDTO.getDiagnostic());
+    prescription.setDays(prescriptionDTO.getDays());
+    prescription.setDatePrescripted(prescriptionDTO.getDatePrescripted());
+    prescription.setPrescriptionDrugs(prescriptionDTO.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugDTOToPrescriptionDrug).collect(Collectors.toList()));
+
+    return prescription;
   }
 }
