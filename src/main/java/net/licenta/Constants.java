@@ -16,5 +16,6 @@ public class Constants {
   
   public static final String BUNDLE_ROLE_FIND_BY_CODE = "role.find.ByCode";
   public static final String BUNDLE_USER_ID_NOT_FOUND = "user.find.username";
+  public static final String BUNDLE_PRESCRIPTION_CREATE_NO_DRUGS = "prescription.drugs.notFound";
 
 }
