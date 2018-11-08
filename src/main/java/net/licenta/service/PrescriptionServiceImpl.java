@@ -1,19 +1,15 @@
 package net.licenta.service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import net.licenta.Constants;
 import net.licenta.error.ErrorDetailsNotFound;
