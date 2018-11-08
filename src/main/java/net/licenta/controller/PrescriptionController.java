@@ -27,4 +27,7 @@ public interface PrescriptionController {
 
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]')")
   public ResponseEntity<HttpStatus> deleteAllPrescriptions();
+  
+  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]')")
+  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientName(String firstName, String lastName);
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -43,9 +44,9 @@ public class PrescriptionControllerImpl implements PrescriptionController {
   @GetMapping
   @Override
   public ResponseEntity<Set<PrescriptionDTO>> getAllPrescriptions() {
-    Set<PrescriptionDTO> events = prescriptionService.getAllPrescriptions();
-    log.info("Returned {} prescriptions", events.size());
-    return !CollectionUtils.isEmpty(events) ? new ResponseEntity<>(events, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    Set<PrescriptionDTO> prescriptionDTOs = prescriptionService.getAllPrescriptions();
+    log.info("Returned {} prescriptions", prescriptionDTOs.size());
+    return !CollectionUtils.isEmpty(prescriptionDTOs) ? new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
   @Timed(millis = 10000)
@@ -110,5 +111,12 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     log.info("Delete all prescriptions");
     HttpStatus http = prescriptionService.deleteAllPrescriptions() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
     return new ResponseEntity<>(http);
+  }
+
+  @Override
+  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+    Set<PrescriptionDTO> prescriptionDTOs = prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName);
+    log.info("Returned {} prescriptions from patient with firstname = {} and lastname = {}", prescriptionDTOs.size(), firstName, lastName);
+    return !CollectionUtils.isEmpty(prescriptionDTOs) ? new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 }

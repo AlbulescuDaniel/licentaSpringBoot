@@ -1,14 +1,19 @@
 package net.licenta.service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import net.licenta.Constants;
 import net.licenta.error.ErrorDetailsNotFound;
@@ -17,6 +22,7 @@ import net.licenta.model.entity.Drug;
 import net.licenta.model.entity.Prescription;
 import net.licenta.model.util.DataModelTransformer;
 import net.licenta.repository.DrugRepository;
+import net.licenta.repository.PatientRepository;
 import net.licenta.repository.PrescriptionRepository;
 
 @Service
@@ -24,6 +30,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
   @Autowired
   PrescriptionRepository prescriptionRepository;
+
+  @Autowired
+  PatientRepository patientRepository;
 
   @Autowired
   DrugRepository drugRepository;
@@ -83,5 +92,12 @@ public class PrescriptionServiceImpl implements PrescriptionService {
   public Boolean deleteAllPrescriptions() {
     prescriptionRepository.deleteAll();
     return prescriptionRepository.count() == 0L;
+  }
+
+  @Override
+  public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName) {
+    return patientRepository.findByFirstNameAndLastName(firstName, lastName)
+        .map(patient -> prescriptionRepository.findByPatient(patient).stream().map(DataModelTransformer::fromPrescriptionToPrescriptionDTO).collect(Collectors.toSet()))
+        .orElseGet(Collections::emptySet);
   }
 }

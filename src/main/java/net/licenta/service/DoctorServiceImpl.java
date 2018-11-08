@@ -38,7 +38,6 @@ public class DoctorServiceImpl implements DrugService {
   @Override
   public Optional<DrugDTO> updateDrug(Long id, DrugDTO drugDTO) {
     return drugRepository.findById(id).map(entity -> {
-      // ownerValidator.validateOwner(entity.getUserName());
       Drug drug = DataModelTransformer.fromDrugDTOToDrug(drugDTO);
       BeanUtils.copyProperties(drug, entity);
       entity.setId(id);
@@ -49,7 +48,6 @@ public class DoctorServiceImpl implements DrugService {
   @Override
   public Boolean deleteDrugById(Long id) {
     return drugRepository.findById(id).map(entity -> {
-      // ownerValidator.validateOwner(entity.getUserName());
       drugRepository.deleteById(id);
       return true;
     }).orElseGet(() -> false);

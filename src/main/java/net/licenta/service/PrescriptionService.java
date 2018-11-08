@@ -18,4 +18,6 @@ public interface PrescriptionService {
   public Boolean deletePrescriptionById(Long id);
   
   public Boolean deleteAllPrescriptions();
+
+  public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName);
 }

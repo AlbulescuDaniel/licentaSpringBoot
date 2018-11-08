@@ -10,12 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_PRESCRIPTION")
-public class Prescription {
+public class Prescription extends EntityAudit{
   @Id
   @Column(name = "ID_PRESCRIPTION")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +25,20 @@ public class Prescription {
 
   @Column(name = "DIAGNOSTIC")
   private String diagnostic;
-  
+
   @Column(name = "DAYS")
   private Integer days;
-  
+
   @Column(name = "DATE_PRESCRIPTED")
   private LocalDate datePrescripted;
 
   @OneToMany(mappedBy = "prescription", fetch = FetchType.EAGER)
   private List<PrescriptionDrug> prescriptionDrugs;
-  
+
+  @ManyToOne
+  @JoinColumn(name = "ID_PATIENT")
+  private UserPatient patient;
+
   public Prescription() {
     super();
     prescriptionDrugs = new ArrayList<>();
@@ -76,5 +82,13 @@ public class Prescription {
 
   public void setPrescriptionDrugs(List<PrescriptionDrug> prescriptionDrugs) {
     this.prescriptionDrugs = prescriptionDrugs;
+  }
+
+  public UserPatient getPatient() {
+    return patient;
+  }
+
+  public void setPatient(UserPatient patient) {
+    this.patient = patient;
   }
 }
