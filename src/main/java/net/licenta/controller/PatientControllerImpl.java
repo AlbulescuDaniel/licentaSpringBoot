@@ -40,6 +40,8 @@ public class PatientControllerImpl implements PatientController {
   @Autowired
   PatientService patientService;
 
+  @ApiOperation(value = "Return all patients.")
+  @ApiResponses(value = { @ApiResponse(code = 200, message = "All patients are returned.") })
   @GetMapping
   @Override
   public ResponseEntity<Set<UserPatientDTO>> getAllPatients() {
@@ -49,7 +51,6 @@ public class PatientControllerImpl implements PatientController {
     return new ResponseEntity<>(patients, http);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Return patient with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Patient returned successfully!"),
       @ApiResponse(code = 404, message = "The patient with the required ID does not exist.", response = Error.class) })
@@ -62,7 +63,6 @@ public class PatientControllerImpl implements PatientController {
     }).orElseGet(() -> new ResponseEntity<UserPatientDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Create new patient.")
   @ApiResponses(value = { @ApiResponse(code = 201, message = "Patient successfully created!"), @ApiResponse(code = 400, message = "Patient fields are invalid.", response = Error.class),
       @ApiResponse(code = 409, message = "Creating new patient failed.", response = Error.class) })
@@ -76,7 +76,6 @@ public class PatientControllerImpl implements PatientController {
     }).orElseGet(() -> new ResponseEntity<UserPatientDTO>(HttpStatus.CONFLICT));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Update patient with the required id with the new patient fields.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Patient with the required id was updated"),
       @ApiResponse(code = 404, message = "The patient with tre required ID does not exist.", response = Error.class),
@@ -90,7 +89,6 @@ public class PatientControllerImpl implements PatientController {
     }).orElseGet(() -> new ResponseEntity<UserPatientDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete patient with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Patient with the required id was deleted."),
       @ApiResponse(code = 404, message = "The patient with the required ID does not exist.", response = Error.class) })
@@ -102,7 +100,6 @@ public class PatientControllerImpl implements PatientController {
     return new ResponseEntity<>(http);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete all the patients from the database.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "All the patients were succesfully deleted."),
       @ApiResponse(code = 404, message = "All the patients were not deleted deleted.", response = Error.class) })
