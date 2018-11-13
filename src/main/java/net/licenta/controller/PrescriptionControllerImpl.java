@@ -38,7 +38,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
   @Autowired
   PrescriptionService prescriptionService;
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Return all the prescriptions.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "All prescriptions are returned"), @ApiResponse(code = 404, message = "Prescription list is empty") })
   @GetMapping
@@ -49,7 +48,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     return !CollectionUtils.isEmpty(prescriptionDTOs) ? new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Return prescription with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Prescription returned successfully!"),
       @ApiResponse(code = 404, message = "The prescriptions with the required id does not exist.", response = Error.class) })
@@ -62,7 +60,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     }).orElseGet(() -> new ResponseEntity<PrescriptionDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Create new prescription.")
   @ApiResponses(value = { @ApiResponse(code = 201, message = "Prescription successfully created!"), @ApiResponse(code = 400, message = "Prescription fields are invalid.", response = Error.class),
       @ApiResponse(code = 409, message = "Creating new prescription failed.", response = Error.class) })
@@ -75,7 +72,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     }).orElseGet(() -> new ResponseEntity<PrescriptionDTO>(HttpStatus.CONFLICT));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Update prescription with the required id with the new event fields.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Prescription with the required id was updated"),
       @ApiResponse(code = 404, message = "The prescription ID you entered does not exist or version is too old.", response = Error.class),
@@ -89,7 +85,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     }).orElseGet(() -> new ResponseEntity<PrescriptionDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete prescription by id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "The prescription was succesfully deleted!"),
       @ApiResponse(code = 404, message = "The prescription was not found or the registrations are open for the specified event.", response = Error.class) })
@@ -101,7 +96,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     return new ResponseEntity<>(http);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete all the prescriptions.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "All the prescriptions were succesfully deleted!"),
       @ApiResponse(code = 404, message = "There are no prescriptions.", response = Error.class) })

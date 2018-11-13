@@ -37,7 +37,6 @@ public class DrugControllerImpl implements DrugController {
   @Autowired
   DrugService drugService;
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Return all drugs.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "All drugs are returned.") })
   @GetMapping
@@ -49,7 +48,6 @@ public class DrugControllerImpl implements DrugController {
     return new ResponseEntity<>(drugs, http);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Return drugs with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Drug returned successfully!"),
       @ApiResponse(code = 404, message = "The drugs with the required ID does not exist.", response = Error.class) })
@@ -62,7 +60,6 @@ public class DrugControllerImpl implements DrugController {
     }).orElseGet(() -> new ResponseEntity<DrugDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Create new drugs.")
   @ApiResponses(value = { @ApiResponse(code = 201, message = "Drug successfully created!"), @ApiResponse(code = 400, message = "Drug fields are invalid.", response = Error.class),
       @ApiResponse(code = 409, message = "Creating new drugs failed.", response = Error.class) })
@@ -75,7 +72,6 @@ public class DrugControllerImpl implements DrugController {
     }).orElseGet(() -> new ResponseEntity<DrugDTO>(HttpStatus.CONFLICT));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Update drug with the required id with the new doctor fields.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Drug with the required id was updated"),
       @ApiResponse(code = 404, message = "The drugs with tre required ID does not exist.", response = Error.class),
@@ -89,7 +85,6 @@ public class DrugControllerImpl implements DrugController {
     }).orElseGet(() -> new ResponseEntity<DrugDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete drug with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Drug with the required id was deleted."),
       @ApiResponse(code = 404, message = "The drug with the required ID does not exist.", response = Error.class) })
@@ -101,7 +96,6 @@ public class DrugControllerImpl implements DrugController {
     return new ResponseEntity<>(http);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete all the drugs from the database.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "All the drugs were succesfully deleted."),
       @ApiResponse(code = 404, message = "All the drugs were not deleted deleted.", response = Error.class) })

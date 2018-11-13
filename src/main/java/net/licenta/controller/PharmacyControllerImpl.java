@@ -40,7 +40,6 @@ public class PharmacyControllerImpl implements PharmacyController {
   @Autowired
   PharmacyService pharmacyService;
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Return all pharmacies.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "All pharmacies are returned.") })
   @GetMapping
@@ -52,7 +51,6 @@ public class PharmacyControllerImpl implements PharmacyController {
     return new ResponseEntity<>(pharmacyDTOs, http);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Return pharmacy with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Pharmacy returned successfully!"),
       @ApiResponse(code = 404, message = "The pharmacy with the required ID does not exist.", response = Error.class) })
@@ -65,7 +63,6 @@ public class PharmacyControllerImpl implements PharmacyController {
     }).orElseGet(() -> new ResponseEntity<UserPharmacyDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Create new pharmacy.")
   @ApiResponses(value = { @ApiResponse(code = 201, message = "Pharmacy successfully created!"),
       @ApiResponse(code = 400, message = "Pharmacy fields are invalid.", response = Error.class),
@@ -80,7 +77,6 @@ public class PharmacyControllerImpl implements PharmacyController {
     }).orElseGet(() -> new ResponseEntity<UserPharmacyDTO>(HttpStatus.CONFLICT));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Update pharmacy with the required id with the new patient fields.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Pharmacy with the required id was updated"),
       @ApiResponse(code = 404, message = "The pharmacy with tre required ID does not exist.", response = Error.class),
@@ -94,7 +90,6 @@ public class PharmacyControllerImpl implements PharmacyController {
     }).orElseGet(() -> new ResponseEntity<UserPharmacyDTO>(HttpStatus.NOT_FOUND));
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete pharmacy with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Pharmacy with the required id was deleted."),
       @ApiResponse(code = 404, message = "The pharmacy with the required ID does not exist.", response = Error.class) })
@@ -106,7 +101,6 @@ public class PharmacyControllerImpl implements PharmacyController {
     return new ResponseEntity<>(http);
   }
 
-  @Timed(millis = 10000)
   @ApiOperation(value = "Delete all the pharmacies from the database.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "All the pharmacies were succesfully deleted."),
       @ApiResponse(code = 404, message = "The pharmacies were not deleted deleted.", response = Error.class) })
