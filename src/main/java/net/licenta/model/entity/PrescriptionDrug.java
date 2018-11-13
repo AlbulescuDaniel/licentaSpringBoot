@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 @Table(name = "T_PRESCRIPTION_DRUG")
 @Entity
 public class PrescriptionDrug {
@@ -34,6 +36,12 @@ public class PrescriptionDrug {
   @ManyToOne
   @JoinColumn(name = "ID_DRUG")
   private Drug drug;
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("checked", checked).append("description", description).append("pillsNumber", pillsNumber)
+        .append("drug", drug).toString();
+  }
 
   public Long getId() {
     return id;

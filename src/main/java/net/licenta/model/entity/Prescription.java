@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 @Entity
 @Table(name = "T_PRESCRIPTION")
 public class Prescription extends EntityAudit{
@@ -38,6 +40,12 @@ public class Prescription extends EntityAudit{
   @ManyToOne
   @JoinColumn(name = "ID_PATIENT")
   private UserPatient patient;
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("diagnostic", diagnostic).append("days", days).append("datePrescripted", datePrescripted).append("prescriptionDrugs", prescriptionDrugs)
+        .append("patient", patient).toString();
+  }
 
   public Prescription() {
     super();

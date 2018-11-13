@@ -16,7 +16,6 @@ public interface PatientController {
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]','[{authority=PHA}]')")
   public ResponseEntity<UserPatientDTO> getPatientById(Long id);
 
-  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")
   public ResponseEntity<UserPatientDTO> createPatient(UserPatientDTO userDTO);
 
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")

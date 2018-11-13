@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 @Table(name = "T_DRUG")
 @Entity
 public class Drug {
@@ -33,6 +35,11 @@ public class Drug {
 
   @OneToMany(mappedBy = "drug")
   private List<PrescriptionDrug> prescriptionDrugs;
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("name", name).append("description", description).append("manufacturer", manufacturer).append("activeComponent", activeComponent).toString();
+  }
 
   public Long getId() {
     return id;

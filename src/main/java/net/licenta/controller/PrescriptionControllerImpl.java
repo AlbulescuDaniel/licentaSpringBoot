@@ -113,6 +113,7 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     return new ResponseEntity<>(http);
   }
 
+  @GetMapping("/prescriptions")
   @Override
   public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
     Set<PrescriptionDTO> prescriptionDTOs = prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName);
