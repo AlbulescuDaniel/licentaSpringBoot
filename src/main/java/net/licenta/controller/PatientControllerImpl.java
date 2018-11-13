@@ -40,9 +40,6 @@ public class PatientControllerImpl implements PatientController {
   @Autowired
   PatientService patientService;
 
-  @Timed(millis = 10000)
-  @ApiOperation(value = "Return all patients.")
-  @ApiResponses(value = { @ApiResponse(code = 200, message = "All patients are returned.") })
   @GetMapping
   @Override
   public ResponseEntity<Set<UserPatientDTO>> getAllPatients() {
