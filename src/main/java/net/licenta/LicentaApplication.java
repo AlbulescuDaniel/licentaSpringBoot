@@ -19,7 +19,7 @@ public class LicentaApplication {
 	
 	@GetMapping
 	public String test() {
-	  return "Is On";
+	  return "Te Iubesc <3 :*";
 	}
 	
 	 /**
