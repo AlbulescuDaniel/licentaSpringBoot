@@ -7,7 +7,7 @@ public class PrescriptionDrugDTO {
   private String description;
   private Integer pillsNumber;
   private PrescriptionDTO prescriptionDTO;
-  private DrugDTO drugDTO;
+  private String drug;
 
   public Long getId() {
     return id;
@@ -49,11 +49,11 @@ public class PrescriptionDrugDTO {
     this.prescriptionDTO = prescriptionDTO;
   }
 
-  public DrugDTO getDrugDTO() {
-    return drugDTO;
+  public String getDrug() {
+    return drug;
   }
 
-  public void setDrugDTO(DrugDTO drugDTO) {
-    this.drugDTO = drugDTO;
+  public void setDrug(String drug) {
+    this.drug = drug;
   }
 }

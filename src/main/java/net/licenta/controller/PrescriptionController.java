@@ -1,5 +1,7 @@
 package net.licenta.controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.http.HttpStatus;
@@ -16,8 +18,8 @@ public interface PrescriptionController {
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]','[{authority=PHA}]')")
   public ResponseEntity<PrescriptionDTO> getPrescriptionById(Long id);
 
-  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")
-  public ResponseEntity<PrescriptionDTO> createPrescription(PrescriptionDTO prescriptionDTO);
+//  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")
+  public ResponseEntity<PrescriptionDTO> createPrescription(PrescriptionDTO prescriptionDTO, String firstName, String lastName);
 
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")
   public ResponseEntity<PrescriptionDTO> updatePrescription(Long id, PrescriptionDTO prescriptionDTO);
@@ -29,5 +31,5 @@ public interface PrescriptionController {
   public ResponseEntity<HttpStatus> deleteAllPrescriptions();
   
 //  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]')")
-  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientName(String firstName, String lastName);
+  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientNameAndDateBetwwen(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
 }

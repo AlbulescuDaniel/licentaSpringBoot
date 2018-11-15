@@ -1,5 +1,6 @@
 package net.licenta.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public interface PrescriptionService {
   
   public Optional<PrescriptionDTO> getPrescriptionById(Long id);
   
-  public Optional<PrescriptionDTO> createPrescription(PrescriptionDTO prescriptionDTO);
+  public Optional<PrescriptionDTO> createPrescription(PrescriptionDTO prescriptionDTO, String firstName, String lastName);
   
   public Optional<PrescriptionDTO> updatePrescription(Long id, PrescriptionDTO prescriptionDTO);
   
@@ -19,5 +20,5 @@ public interface PrescriptionService {
   
   public Boolean deleteAllPrescriptions();
 
-  public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName);
+  public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
 }

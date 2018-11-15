@@ -1,5 +1,6 @@
 package net.licenta.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class PrescriptionDrug {
   @JoinColumn(name = "ID_PRESCRIPTION")
   private Prescription prescription;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.DETACH)
   @JoinColumn(name = "ID_DRUG")
   private Drug drug;
 

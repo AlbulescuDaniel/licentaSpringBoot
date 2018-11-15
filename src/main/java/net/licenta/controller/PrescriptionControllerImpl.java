@@ -1,5 +1,6 @@
 package net.licenta.controller;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -7,6 +8,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -64,8 +67,9 @@ public class PrescriptionControllerImpl implements PrescriptionController {
       @ApiResponse(code = 409, message = "Creating new prescription failed.", response = Error.class) })
   @PostMapping
   @Override
-  public ResponseEntity<PrescriptionDTO> createPrescription(@Valid @RequestBody PrescriptionDTO prescriptionDTO) {
-    return prescriptionService.createPrescription(prescriptionDTO).map(entity -> {
+  public ResponseEntity<PrescriptionDTO> createPrescription(@Valid @RequestBody PrescriptionDTO prescriptionDTO, @RequestParam("firstName") String firstName,
+      @RequestParam(value = "lastName") String lastName) {
+    return prescriptionService.createPrescription(prescriptionDTO, firstName, lastName).map(entity -> {
       log.info("Created prescription with fields: {}", prescriptionDTO);
       return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }).orElseGet(() -> new ResponseEntity<PrescriptionDTO>(HttpStatus.CONFLICT));
@@ -106,11 +110,15 @@ public class PrescriptionControllerImpl implements PrescriptionController {
     return new ResponseEntity<>(http);
   }
 
-  @GetMapping("/prescriptions")
+  @GetMapping("/patient")
   @Override
-  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-    Set<PrescriptionDTO> prescriptionDTOs = prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName);
+  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientNameAndDateBetwwen(@RequestParam("firstName") String firstName, @RequestParam(value = "lastName") String lastName,
+      @RequestParam(name = "startDate") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate, @RequestParam(name = "endDate") @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
+    System.err.println(LocalDate.now());
+    Set<PrescriptionDTO> prescriptionDTOs = (startDate != null || endDate != null) ? prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName, startDate, endDate)
+        : prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName, LocalDate.now().minusYears(1), LocalDate.now());
+
     log.info("Returned {} prescriptions from patient with firstname = {} and lastname = {}", prescriptionDTOs.size(), firstName, lastName);
-    return !CollectionUtils.isEmpty(prescriptionDTOs) ? new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK);
   }
 }

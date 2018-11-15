@@ -49,7 +49,7 @@ public class LoginService implements UserDetailsService {
       return new org.springframework.security.core.userdetails.User(userPharmacy.get().getUserName(), userPharmacy.get().getPassword(), getAuthority(userPharmacy.get()));
     }
 
-    throw new UsernameNotFoundException(ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_USER_ID_NOT_FOUND));
+    throw new UsernameNotFoundException(ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_USER_DO_NOT_FOUND));
   }
 
   private Set<SimpleGrantedAuthority> getAuthority(User user) {

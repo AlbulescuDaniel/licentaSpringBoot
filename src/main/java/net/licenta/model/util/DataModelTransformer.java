@@ -155,7 +155,9 @@ public class DataModelTransformer {
     prescriptionDrug.setChecked(prescriptionDrugDTO.getChecked());
     prescriptionDrug.setDescription(prescriptionDrugDTO.getDescription());
     prescriptionDrug.setPillsNumber(prescriptionDrugDTO.getPillsNumber());
-    prescriptionDrug.setDrug(fromDrugDTOToDrug(prescriptionDrugDTO.getDrugDTO()));
+    Drug drug = new Drug();
+    drug.setName(prescriptionDrugDTO.getDrug());
+    prescriptionDrug.setDrug(drug);
 
     return prescriptionDrug;
   }
@@ -166,7 +168,7 @@ public class DataModelTransformer {
     prescriptionDrugDTO.setChecked(prescriptionDrug.getChecked());
     prescriptionDrugDTO.setDescription(prescriptionDrug.getDescription());
     prescriptionDrugDTO.setPillsNumber(prescriptionDrug.getPillsNumber());
-    prescriptionDrugDTO.setDrugDTO(fromDrugToDrugDTO(prescriptionDrug.getDrug()));
+    prescriptionDrugDTO.setDrug(prescriptionDrug.getDrug().getName());
 
     return prescriptionDrugDTO;
   }
@@ -187,7 +189,6 @@ public class DataModelTransformer {
     prescription.setId(prescriptionDTO.getId());
     prescription.setDiagnostic(prescriptionDTO.getDiagnostic());
     prescription.setDays(prescriptionDTO.getDays());
-    prescription.setDatePrescripted(prescriptionDTO.getDatePrescripted());
     prescription.setPrescriptionDrugs(prescriptionDTO.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugDTOToPrescriptionDrug).collect(Collectors.toList()));
 
     return prescription;

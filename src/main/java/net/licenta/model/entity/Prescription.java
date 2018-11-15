@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,10 +35,10 @@ public class Prescription extends EntityAudit{
   @Column(name = "DATE_PRESCRIPTED")
   private LocalDate datePrescripted;
 
-  @OneToMany(mappedBy = "prescription", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "prescription", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<PrescriptionDrug> prescriptionDrugs;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.DETACH)
   @JoinColumn(name = "ID_PATIENT")
   private UserPatient patient;
 
@@ -50,6 +51,7 @@ public class Prescription extends EntityAudit{
   public Prescription() {
     super();
     prescriptionDrugs = new ArrayList<>();
+    datePrescripted = LocalDate.now();
   }
 
   public Long getId() {
