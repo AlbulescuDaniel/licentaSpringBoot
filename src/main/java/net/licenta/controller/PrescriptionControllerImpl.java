@@ -114,7 +114,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
   @Override
   public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientNameAndDateBetwwen(@RequestParam("firstName") String firstName, @RequestParam(value = "lastName") String lastName,
       @RequestParam(name = "startDate") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate, @RequestParam(name = "endDate") @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
-    System.err.println(LocalDate.now());
     Set<PrescriptionDTO> prescriptionDTOs = (startDate != null || endDate != null) ? prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName, startDate, endDate)
         : prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName, LocalDate.now().minusYears(1), LocalDate.now());
 
