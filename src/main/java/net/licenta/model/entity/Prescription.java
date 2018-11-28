@@ -40,6 +40,12 @@ public class Prescription extends EntityAudit {
 
   @Column(name = "DATE_PRESCRIPTED")
   private LocalDate datePrescripted;
+  
+  @Column(name = "USER_GENDER")
+  private UserGender userGender;
+  
+  @Column(name = "NATIONALITY")
+  private String nationality;
 
   @OneToMany(mappedBy = "prescription", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<PrescriptionDrug> prescriptionDrugs;
@@ -58,6 +64,22 @@ public class Prescription extends EntityAudit {
     super();
     prescriptionDrugs = new ArrayList<>();
     datePrescripted = LocalDate.now();
+  }
+
+  public UserGender getUserGender() {
+    return userGender;
+  }
+
+  public void setUserGender(UserGender userGender) {
+    this.userGender = userGender;
+  }
+
+  public String getNationality() {
+    return nationality;
+  }
+
+  public void setNationality(String nationality) {
+    this.nationality = nationality;
   }
 
   public Long getPrescriptionNumber() {

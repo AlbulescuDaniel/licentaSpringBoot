@@ -69,7 +69,6 @@ public class PrescriptionControllerImpl implements PrescriptionController {
   @Override
   public ResponseEntity<PrescriptionDTO> createPrescription(@Valid @RequestBody PrescriptionDTO prescriptionDTO, @RequestParam("firstName") String firstName,
       @RequestParam(value = "lastName") String lastName) {
-    System.err.println("intra");
     return prescriptionService.createPrescription(prescriptionDTO, firstName, lastName).map(entity -> {
       log.info("Created prescription with fields: {}", prescriptionDTO);
       return new ResponseEntity<>(entity, HttpStatus.CREATED);

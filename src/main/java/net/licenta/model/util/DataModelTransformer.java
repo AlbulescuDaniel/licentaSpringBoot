@@ -186,6 +186,8 @@ public class DataModelTransformer {
   public static PrescriptionDTO fromPrescriptionToPrescriptionDTO(Prescription prescription) {
     PrescriptionDTO prescriptionDTO = new PrescriptionDTO();
     prescriptionDTO.setPrescriptionNumber(prescription.getPrescriptionNumber());
+    prescriptionDTO.setUserGender(prescription.getUserGender());
+    prescriptionDTO.setNationality(prescription.getNationality());
     prescriptionDTO.setHospitalType(prescription.getHospitalType());
     prescriptionDTO.setPatientType(prescription.getPatientType());
     prescriptionDTO.setId(prescription.getId());
@@ -197,9 +199,17 @@ public class DataModelTransformer {
   }
 
   public static Prescription fromPrescriptionDTOToPrescription(PrescriptionDTO prescriptionDTO) {
+    System.err.println(prescriptionDTO.toString());
     Prescription prescription = new Prescription();
     prescription.setId(prescriptionDTO.getId());
     prescription.setDiagnostic(prescriptionDTO.getDiagnostic());
+    prescription.setPrescriptionNumber(prescriptionDTO.getPrescriptionNumber());
+    prescription.setUserGender(prescriptionDTO.getUserGender());
+    prescription.setNationality(prescriptionDTO.getNationality());
+    prescription.setHospitalType(prescriptionDTO.getHospitalType());
+    prescription.setPatientType(prescriptionDTO.getPatientType());
+    prescription.setDatePrescripted(prescriptionDTO.getDatePrescripted());
+
     prescription.setPrescriptionDrugs(prescriptionDTO.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugDTOToPrescriptionDrug).collect(Collectors.toList()));
 
     return prescription;

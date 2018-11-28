@@ -3,7 +3,7 @@ package net.licenta.model.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import net.licenta.model.entity.HospitalType;
+import net.licenta.model.entity.UserGender;
 
 public class PrescriptionDTO {
   
@@ -12,9 +12,26 @@ public class PrescriptionDTO {
   private String hospitalType;
   private String patientType;
   private String diagnostic;
-  private Integer days;
   private LocalDate datePrescripted;
+  private UserGender userGender;
+  private String nationality;
   private List<PrescriptionDrugDTO> prescriptionDrugsDTO;
+
+  public UserGender getUserGender() {
+    return userGender;
+  }
+
+  public void setUserGender(UserGender userGender) {
+    this.userGender = userGender;
+  }
+
+  public String getNationality() {
+    return nationality;
+  }
+
+  public void setNationality(String nationality) {
+    this.nationality = nationality;
+  }
 
   public Long getId() {
     return id;
@@ -30,14 +47,6 @@ public class PrescriptionDTO {
 
   public void setDiagnostic(String diagnostic) {
     this.diagnostic = diagnostic;
-  }
-
-  public Integer getDays() {
-    return days;
-  }
-
-  public void setDays(Integer days) {
-    this.days = days;
   }
 
   public LocalDate getDatePrescripted() {
@@ -78,5 +87,11 @@ public class PrescriptionDTO {
 
   public void setPrescriptionDrugs(List<PrescriptionDrugDTO> prescriptionDrugsDTO) {
     this.prescriptionDrugsDTO = prescriptionDrugsDTO;
+  }
+
+  @Override
+  public String toString() {
+    return "PrescriptionDTO [id=" + id + ", prescriptionNumber=" + prescriptionNumber + ", hospitalType=" + hospitalType + ", patientType=" + patientType + ", diagnostic=" + diagnostic
+        + ", datePrescripted=" + datePrescripted + ", userGender=" + userGender + ", nationality=" + nationality + ", prescriptionDrugsDTO=" + prescriptionDrugsDTO + "]";
   }
 }

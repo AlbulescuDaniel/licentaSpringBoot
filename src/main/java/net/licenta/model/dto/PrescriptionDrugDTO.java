@@ -1,11 +1,14 @@
 package net.licenta.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class PrescriptionDrugDTO {
   
   private Long id;
   private Boolean checked;
   private String description;
   private Integer pillsNumber;
+  @JsonIgnore
   private PrescriptionDTO prescriptionDTO;
   private String drug;
   private Integer days;
