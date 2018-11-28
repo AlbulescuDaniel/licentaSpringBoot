@@ -3,12 +3,14 @@ package net.licenta.model.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import net.licenta.model.entity.HospitalType;
+
 public class PrescriptionDTO {
   
   private Long id;
   private Long prescriptionNumber;
-  private Long hospitalType;
-  private Long patientType;
+  private String hospitalType;
+  private String patientType;
   private String diagnostic;
   private Integer days;
   private LocalDate datePrescripted;
@@ -62,19 +64,19 @@ public class PrescriptionDTO {
     this.prescriptionNumber = prescriptionNumber;
   }
 
-  public Long getHospitalType() {
+  public String getHospitalType() {
     return hospitalType;
   }
 
-  public void setHospitalType(Long hospitalType) {
+  public void setHospitalType(String hospitalType) {
     this.hospitalType = hospitalType;
   }
 
-  public Long getPatientType() {
+  public String getPatientType() {
     return patientType;
   }
 
-  public void setPatientType(Long patientType) {
+  public void setPatientType(String patientType) {
     this.patientType = patientType;
   }
 

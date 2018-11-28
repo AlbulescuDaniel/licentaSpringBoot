@@ -30,10 +30,10 @@ public class Prescription extends EntityAudit {
   private Long prescriptionNumber;
   
   @Column(name = "HOSPITAL_TYPE")
-  private Long hospitalType;
+  private String hospitalType;
   
   @Column(name = "PATIENT_TYPE")
-  private Long patientType;
+  private String patientType;
 
   @Column(name = "DIAGNOSTIC")
   private String diagnostic;
@@ -68,19 +68,19 @@ public class Prescription extends EntityAudit {
     this.prescriptionNumber = prescriptionNumber;
   }
 
-  public Long getHospitalType() {
+  public String getHospitalType() {
     return hospitalType;
   }
 
-  public void setHospitalType(Long hospitalType) {
+  public void setHospitalType(String hospitalType) {
     this.hospitalType = hospitalType;
   }
 
-  public Long getPatientType() {
+  public String getPatientType() {
     return patientType;
   }
 
-  public void setPatientType(Long patientType) {
+  public void setPatientType(String patientType) {
     this.patientType = patientType;
   }
 
