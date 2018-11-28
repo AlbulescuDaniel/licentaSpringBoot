@@ -48,14 +48,6 @@ public class PrescriptionDTO {
     this.datePrescripted = datePrescripted;
   }
 
-  public List<PrescriptionDrugDTO> getPrescriptionDrugs() {
-    return prescriptionDrugsDTO;
-  }
-
-  public void setPrescriptionDrugs(List<PrescriptionDrugDTO> prescriptionDrugsDTO) {
-    this.prescriptionDrugsDTO = prescriptionDrugsDTO;
-  }
-
   public Long getPrescriptionNumber() {
     return prescriptionNumber;
   }
@@ -80,11 +72,11 @@ public class PrescriptionDTO {
     this.patientType = patientType;
   }
 
-  public List<PrescriptionDrugDTO> getPrescriptionDrugsDTO() {
+  public List<PrescriptionDrugDTO> getPrescriptionDrugs() {
     return prescriptionDrugsDTO;
   }
 
-  public void setPrescriptionDrugsDTO(List<PrescriptionDrugDTO> prescriptionDrugsDTO) {
+  public void setPrescriptionDrugs(List<PrescriptionDrugDTO> prescriptionDrugsDTO) {
     this.prescriptionDrugsDTO = prescriptionDrugsDTO;
   }
 }
