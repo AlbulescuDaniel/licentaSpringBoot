@@ -83,7 +83,7 @@ public class LicentaApplication {
       userDoctor.setEmail("doctor@doctor@gmail.com");
       userDoctor.setFirstName("doctor");
       userDoctor.setLastName("doctor");
-      userDoctor.setPassword("1!aAaaaa");
+      userDoctor.setPassword("\"$2a$10$4ij54b/qMsS84pTjejjOvOovqr0b6Zmz64s7Q3dxo32YmgyHGV.4W\"");
       userDoctor.setPhoneNumber("1234");
       userDoctor.setRoleType(RoleType.DOC);
       userDoctor.setUserName("abc");
@@ -100,7 +100,7 @@ public class LicentaApplication {
       userPatient.setFirstName("patient");
       userPatient.setGender(UserGender.Male);
       userPatient.setLastName("patient");
-      userPatient.setPassword("1!aAaaaa");
+      userPatient.setPassword("\"$2a$10$4ij54b/qMsS84pTjejjOvOovqr0b6Zmz64s7Q3dxo32YmgyHGV.4W\"");
       userPatient.setPhoneNumber("43211");
       userPatient.setUserName("asd");
       userPatient.setRoleType(RoleType.PAT);
