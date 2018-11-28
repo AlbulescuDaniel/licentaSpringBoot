@@ -8,9 +8,18 @@ public class PrescriptionDrugDTO {
   private Integer pillsNumber;
   private PrescriptionDTO prescriptionDTO;
   private String drug;
+  private Integer days;
 
   public Long getId() {
     return id;
+  }
+
+  public Integer getDays() {
+    return days;
+  }
+
+  public void setDays(Integer days) {
+    this.days = days;
   }
 
   public void setId(Long id) {

@@ -1,5 +1,6 @@
 package net.licenta.model.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,15 @@ public class UserPatient extends User {
 
   @Column(name = "LAST_NAME")
   private String lastName;
+  
+  @Column(name = "CNP")
+  private String cnp;
+  
+  @Column(name = "BIRTH_DATE")
+  private LocalDate birthDate;
+  
+  @Column(name = "GENDER")
+  private UserGender gender;
 
   @OneToMany(mappedBy = "patient")
   private List<Prescription> prescriptions;
@@ -29,6 +39,30 @@ public class UserPatient extends User {
     super();
     super.setRoleType(RoleType.PAT);
     prescriptions = new ArrayList<>();
+  }
+
+  public UserGender getGender() {
+    return gender;
+  }
+
+  public void setGender(UserGender gender) {
+    this.gender = gender;
+  }
+
+  public String getCnp() {
+    return cnp;
+  }
+
+  public void setCnp(String cnp) {
+    this.cnp = cnp;
+  }
+
+  public LocalDate getBirthDate() {
+    return birthDate;
+  }
+
+  public void setBirthDate(LocalDate birthDate) {
+    this.birthDate = birthDate;
   }
 
   public String getFirstName() {
@@ -54,5 +88,4 @@ public class UserPatient extends User {
   public void setPrescriptions(List<Prescription> prescriptions) {
     this.prescriptions = prescriptions;
   }
-
 }

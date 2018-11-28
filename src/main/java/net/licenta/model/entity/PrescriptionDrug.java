@@ -30,6 +30,9 @@ public class PrescriptionDrug {
   @Column(name = "pillsNumber")
   private Integer pillsNumber;
 
+  @Column(name = "DAYS")
+  private Integer days;
+  
   @ManyToOne
   @JoinColumn(name = "ID_PRESCRIPTION")
   private Prescription prescription;
@@ -42,6 +45,14 @@ public class PrescriptionDrug {
   public String toString() {
     return new ToStringBuilder(this).append("id", id).append("checked", checked).append("description", description).append("pillsNumber", pillsNumber)
         .append("drug", drug).toString();
+  }
+
+  public Integer getDays() {
+    return days;
+  }
+
+  public void setDays(Integer days) {
+    this.days = days;
   }
 
   public Long getId() {

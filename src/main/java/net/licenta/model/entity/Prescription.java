@@ -20,17 +20,23 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "T_PRESCRIPTION")
-public class Prescription extends EntityAudit{
+public class Prescription extends EntityAudit {
   @Id
   @Column(name = "ID_PRESCRIPTION")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "PRESCRIPTION_NUMBER")
+  private Long prescriptionNumber;
+  
+  @Column(name = "HOSPITAL_TYPE")
+  private Long hospitalType;
+  
+  @Column(name = "PATIENT_TYPE")
+  private Long patientType;
+
   @Column(name = "DIAGNOSTIC")
   private String diagnostic;
-
-  @Column(name = "DAYS")
-  private Integer days;
 
   @Column(name = "DATE_PRESCRIPTED")
   private LocalDate datePrescripted;
@@ -44,7 +50,7 @@ public class Prescription extends EntityAudit{
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("id", id).append("diagnostic", diagnostic).append("days", days).append("datePrescripted", datePrescripted).append("prescriptionDrugs", prescriptionDrugs)
+    return new ToStringBuilder(this).append("id", id).append("diagnostic", diagnostic).append("datePrescripted", datePrescripted).append("prescriptionDrugs", prescriptionDrugs)
         .append("patient", patient).toString();
   }
 
@@ -52,6 +58,30 @@ public class Prescription extends EntityAudit{
     super();
     prescriptionDrugs = new ArrayList<>();
     datePrescripted = LocalDate.now();
+  }
+
+  public Long getPrescriptionNumber() {
+    return prescriptionNumber;
+  }
+
+  public void setPrescriptionNumber(Long prescriptionNumber) {
+    this.prescriptionNumber = prescriptionNumber;
+  }
+
+  public Long getHospitalType() {
+    return hospitalType;
+  }
+
+  public void setHospitalType(Long hospitalType) {
+    this.hospitalType = hospitalType;
+  }
+
+  public Long getPatientType() {
+    return patientType;
+  }
+
+  public void setPatientType(Long patientType) {
+    this.patientType = patientType;
   }
 
   public Long getId() {
@@ -68,14 +98,6 @@ public class Prescription extends EntityAudit{
 
   public void setDiagnostic(String diagnostic) {
     this.diagnostic = diagnostic;
-  }
-
-  public Integer getDays() {
-    return days;
-  }
-
-  public void setDays(Integer days) {
-    this.days = days;
   }
 
   public LocalDate getDatePrescripted() {

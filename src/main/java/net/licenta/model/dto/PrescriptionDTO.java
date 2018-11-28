@@ -6,6 +6,9 @@ import java.util.List;
 public class PrescriptionDTO {
   
   private Long id;
+  private Long prescriptionNumber;
+  private Long hospitalType;
+  private Long patientType;
   private String diagnostic;
   private Integer days;
   private LocalDate datePrescripted;
@@ -48,6 +51,38 @@ public class PrescriptionDTO {
   }
 
   public void setPrescriptionDrugs(List<PrescriptionDrugDTO> prescriptionDrugsDTO) {
+    this.prescriptionDrugsDTO = prescriptionDrugsDTO;
+  }
+
+  public Long getPrescriptionNumber() {
+    return prescriptionNumber;
+  }
+
+  public void setPrescriptionNumber(Long prescriptionNumber) {
+    this.prescriptionNumber = prescriptionNumber;
+  }
+
+  public Long getHospitalType() {
+    return hospitalType;
+  }
+
+  public void setHospitalType(Long hospitalType) {
+    this.hospitalType = hospitalType;
+  }
+
+  public Long getPatientType() {
+    return patientType;
+  }
+
+  public void setPatientType(Long patientType) {
+    this.patientType = patientType;
+  }
+
+  public List<PrescriptionDrugDTO> getPrescriptionDrugsDTO() {
+    return prescriptionDrugsDTO;
+  }
+
+  public void setPrescriptionDrugsDTO(List<PrescriptionDrugDTO> prescriptionDrugsDTO) {
     this.prescriptionDrugsDTO = prescriptionDrugsDTO;
   }
 }
