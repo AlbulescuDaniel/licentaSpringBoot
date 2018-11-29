@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.licenta.model.entity.Address;
+import net.licenta.model.entity.Drug;
+import net.licenta.model.entity.Hospital;
 import net.licenta.model.entity.RoleType;
 import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.entity.UserGender;
 import net.licenta.model.entity.UserPatient;
 import net.licenta.repository.DoctorRepository;
+import net.licenta.repository.DrugRepository;
+import net.licenta.repository.HospitalRepository;
 import net.licenta.repository.PatientRepository;
 
 @RestController("/test")
@@ -26,6 +30,8 @@ public class LicentaApplication {
 
   private DoctorRepository doctorRepository;
   private PatientRepository patientRepository;
+  private DrugRepository drugRepository;
+  private HospitalRepository hospitalRepository;
 
   public static void main(String[] args) {
     SpringApplication.run(LicentaApplication.class, args);
@@ -63,9 +69,11 @@ public class LicentaApplication {
    * Bean used to insert dummy objects in database
    */
   @Bean
-  CommandLineRunner init(DoctorRepository doctorRepository, PatientRepository patientRepository) {
+  CommandLineRunner init(DoctorRepository doctorRepository, PatientRepository patientRepository, DrugRepository drugRepository, HospitalRepository hospitalRepository) {
     this.doctorRepository = doctorRepository;
     this.patientRepository = patientRepository;
+    this.drugRepository = drugRepository;
+    this.hospitalRepository = hospitalRepository;
 
     return args -> {
 
@@ -89,7 +97,7 @@ public class LicentaApplication {
       userDoctor.setUserName("abc");
       userDoctor.setAddress(address);
       this.doctorRepository.save(userDoctor);
-      System.out.println(this.doctorRepository.findAll().size());
+      System.out.println("Doctors: " + this.doctorRepository.count());
 
       UserPatient userPatient = new UserPatient();
       userPatient.setId(1L);
@@ -105,7 +113,26 @@ public class LicentaApplication {
       userPatient.setUserName("asd");
       userPatient.setRoleType(RoleType.PAT);
       this.patientRepository.save(userPatient);
-      System.out.println(this.patientRepository.findAll().size());
+      System.out.println("Patients: " + this.patientRepository.count());
+
+      Drug drug = new Drug();
+      drug.setActiveComponent("malai");
+      drug.setDescription("mamaliga");
+      drug.setId(1L);
+      drug.setManufacturer("moara cu noroc");
+      drug.setName("haha");
+      this.drugRepository.save(drug);
+      System.out.println("Drugs: " + this.drugRepository.count());
+      
+      Hospital hospital = new Hospital();
+      hospital.setId(1L);
+      hospital.setAddress(address);
+      hospital.setName("Judetean");
+      hospital.setPhone("112");
+      hospital.setUrc("001927812");
+      
+      this.hospitalRepository.save(hospital);
+      System.out.println("Hospitals: " + this.hospitalRepository.count());
     };
   }
 }
