@@ -17,7 +17,7 @@ public interface PrescriptionController {
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]','[{authority=PHA}]')")
   public ResponseEntity<PrescriptionDTO> getPrescriptionById(Long id);
 
-//  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")
+  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")
   public ResponseEntity<PrescriptionDTO> createPrescription(PrescriptionDTO prescriptionDTO, String firstName, String lastName);
 
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")

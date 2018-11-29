@@ -1,7 +1,11 @@
 package net.licenta.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -17,6 +21,10 @@ public class UserDoctor extends User {
 
   @Column(name = "LAST_NAME")
   private String lastName;
+
+  @JoinColumn(name = "ID_HOSPITAL")
+  @ManyToOne(cascade  = CascadeType.DETACH)
+  private Hospital hospital;
 
   public UserDoctor() {
     super();
@@ -37,5 +45,13 @@ public class UserDoctor extends User {
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
+  }
+
+  public Hospital getHospital() {
+    return hospital;
+  }
+
+  public void setHospital(Hospital hospital) {
+    this.hospital = hospital;
   }
 }

@@ -6,6 +6,7 @@ import net.licenta.model.dto.AddressDTO;
 import net.licenta.model.dto.DrugDTO;
 import net.licenta.model.dto.HospitalDTO;
 import net.licenta.model.dto.PrescriptionDTO;
+import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.PrescriptionDrugDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.dto.UserPatientDTO;
@@ -161,7 +162,6 @@ public class DataModelTransformer {
     PrescriptionDrug prescriptionDrug = new PrescriptionDrug();
     prescriptionDrug.setId(prescriptionDrugDTO.getId());
     prescriptionDrug.setDays(prescriptionDrugDTO.getDays());
-    prescriptionDrug.setChecked(prescriptionDrugDTO.getChecked());
     prescriptionDrug.setDescription(prescriptionDrugDTO.getDescription());
     prescriptionDrug.setPillsNumber(prescriptionDrugDTO.getPillsNumber());
     Drug drug = new Drug();
@@ -175,7 +175,6 @@ public class DataModelTransformer {
     PrescriptionDrugDTO prescriptionDrugDTO = new PrescriptionDrugDTO();
     prescriptionDrugDTO.setDays(prescriptionDrug.getDays());
     prescriptionDrugDTO.setId(prescriptionDrug.getId());
-    prescriptionDrugDTO.setChecked(prescriptionDrug.getChecked());
     prescriptionDrugDTO.setDescription(prescriptionDrug.getDescription());
     prescriptionDrugDTO.setPillsNumber(prescriptionDrug.getPillsNumber());
     prescriptionDrugDTO.setDrug(prescriptionDrug.getDrug().getName());
@@ -222,6 +221,8 @@ public class DataModelTransformer {
     hospital.setPhone(hospitalDTO.getPhone());
     hospital.setUrc(hospitalDTO.getUrc());
     hospital.setAddress(fromAddressDTOToAddress(hospitalDTO.getAddressDTO()));
+    hospital.setWebSite(hospitalDTO.getWebSite());
+    hospital.setDoctors(hospitalDTO.getDoctorsDTO().stream().map(DataModelTransformer::fromDoctorDTOToDoctor).collect(Collectors.toSet()));
 
     return hospital;
   }
@@ -233,7 +234,22 @@ public class DataModelTransformer {
     hospitalDTO.setPhone(hospital.getPhone());
     hospitalDTO.setUrc(hospital.getUrc());
     hospitalDTO.setAddressDTO(fromAddressToAddressDTO(hospital.getAddress()));
+    hospitalDTO.setWebSite(hospital.getWebSite());
+    hospitalDTO.setDoctorsDTO(hospital.getDoctors().stream().map(DataModelTransformer::fromDoctorToDoctorDTO).collect(Collectors.toSet()));
 
     return hospitalDTO;
+  }
+  
+  public static PrescriptionDoctorHospitalDTO fromDoctorToPrescriptionDoctorHospitalDTO(UserDoctor doctor) {
+    Hospital hospital = doctor.getHospital();
+    
+    PrescriptionDoctorHospitalDTO prescriptionDoctorHospitalDTO = new PrescriptionDoctorHospitalDTO();
+    prescriptionDoctorHospitalDTO.setDoctorEmail(doctor.getEmail());
+    prescriptionDoctorHospitalDTO.setHospitalName(hospital.getName());
+    prescriptionDoctorHospitalDTO.setHospitalPhone(hospital.getPhone());
+    prescriptionDoctorHospitalDTO.setHospitalState(hospital.getAddress().getCountryName());
+    prescriptionDoctorHospitalDTO.setHospitalURC(hospital.getUrc());
+
+    return prescriptionDoctorHospitalDTO;
   }
 }

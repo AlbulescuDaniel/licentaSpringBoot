@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 
 public interface DoctorController {
@@ -27,4 +28,7 @@ public interface DoctorController {
 
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]')")
   public ResponseEntity<HttpStatus> deleteAllDoctors();
+  
+  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]')")
+  public ResponseEntity<PrescriptionDoctorHospitalDTO> getDoctorAndHospitalforAutocomplete(String userName);
 }

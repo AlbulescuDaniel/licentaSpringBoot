@@ -10,15 +10,20 @@ import org.springframework.stereotype.Service;
 
 import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.UserDoctorDTO;
+import net.licenta.model.entity.Prescription;
 import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.util.DataModelTransformer;
 import net.licenta.repository.DoctorRepository;
+import net.licenta.repository.PrescriptionRepository;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
   @Autowired
   DoctorRepository doctorRepository;
+  
+  @Autowired
+  PrescriptionRepository prescriptionRepository;
 
   @Override
   public Set<UserDoctorDTO> getAllDoctors() {
@@ -62,7 +67,11 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Override
   public Optional<PrescriptionDoctorHospitalDTO> getDoctorAndHospitalforAutocomplete(String userName) {
-    // TODO Auto-generated method stub
-    return null;
+    return doctorRepository.findByUserName(userName).map(entity -> {
+      PrescriptionDoctorHospitalDTO  prescriptionDoctorHospitalDTO = DataModelTransformer.fromDoctorToPrescriptionDoctorHospitalDTO(entity);
+      prescriptionDoctorHospitalDTO.setPrescriptionNumber(prescriptionRepository.findTopByOrderByIdDesc().map(Prescription::getId).orElseGet(() -> 0L) + 1);
+      
+      return prescriptionDoctorHospitalDTO;
+    });
   }
 }

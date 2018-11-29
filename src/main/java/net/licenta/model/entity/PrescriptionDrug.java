@@ -23,9 +23,6 @@ public class PrescriptionDrug {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "checked")
-  private Boolean checked;
-
   @Column(name = "description")
   private String description;
 
@@ -45,7 +42,7 @@ public class PrescriptionDrug {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("id", id).append("checked", checked).append("description", description).append("pillsNumber", pillsNumber)
+    return new ToStringBuilder(this).append("id", id).append("description", description).append("pillsNumber", pillsNumber)
         .append("drug", drug).toString();
   }
 
@@ -63,14 +60,6 @@ public class PrescriptionDrug {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Boolean getChecked() {
-    return checked;
-  }
-
-  public void setChecked(Boolean checked) {
-    this.checked = checked;
   }
 
   public String getDescription() {

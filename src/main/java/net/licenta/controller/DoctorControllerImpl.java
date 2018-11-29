@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.service.DoctorService;
 
@@ -108,5 +110,14 @@ public class DoctorControllerImpl implements DoctorController {
     log.info("Delete all doctors");
     HttpStatus http = doctorService.deleteAllDoctors() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
     return new ResponseEntity<>(http);
+  }
+
+  @GetMapping("/prescriptionInfo")
+  @Override
+  public ResponseEntity<PrescriptionDoctorHospitalDTO> getDoctorAndHospitalforAutocomplete(@RequestParam("userName") String userName) {
+    return doctorService.getDoctorAndHospitalforAutocomplete(userName).map(entity -> {
+      log.info("Returned autocomplete prescription with fields: ", entity);
+      return new ResponseEntity<>(entity, HttpStatus.OK);
+    }).orElseGet(() -> new ResponseEntity<PrescriptionDoctorHospitalDTO>(HttpStatus.NOT_FOUND));
   }
 }

@@ -8,54 +8,54 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.licenta.model.dto.UserDoctorDTO;
-import net.licenta.model.entity.UserDoctor;
+import net.licenta.model.dto.DrugDTO;
+import net.licenta.model.entity.Drug;
 import net.licenta.model.util.DataModelTransformer;
-import net.licenta.repository.DoctorRepository;
+import net.licenta.repository.DrugRepository;
 
 @Service
-public class DrugServiceImpl implements DoctorService {
+public class DrugServiceImpl implements DrugService {
 
   @Autowired
-  DoctorRepository doctorRepository;
+  DrugRepository drugRepository;
 
   @Override
-  public Set<UserDoctorDTO> getAllDoctors() {
-    return doctorRepository.findAll().stream().map(DataModelTransformer::fromDoctorToDoctorDTO).collect(Collectors.toSet());
+  public Set<DrugDTO> getAllDrugs() {
+    return drugRepository.findAll().stream().map(DataModelTransformer::fromDrugToDrugDTO).collect(Collectors.toSet());
   }
 
   @Override
-  public Optional<UserDoctorDTO> getDoctorById(Long id) {
-    return doctorRepository.findById(id).map(entity -> Optional.ofNullable(DataModelTransformer.fromDoctorToDoctorDTO(entity))).orElseGet(Optional::empty);
+  public Optional<DrugDTO> getDrugById(Long id) {
+    return drugRepository.findById(id).map(entity -> Optional.ofNullable(DataModelTransformer.fromDrugToDrugDTO(entity))).orElseGet(Optional::empty);
   }
 
   @Override
-  public Optional<UserDoctorDTO> createDoctor(UserDoctorDTO userDoctorDTO) {
-    UserDoctor patient = DataModelTransformer.fromDoctorDTOToDoctor(userDoctorDTO);
-    return Optional.ofNullable(DataModelTransformer.fromDoctorToDoctorDTO(doctorRepository.save(patient)));
+  public Optional<DrugDTO> createDrug(DrugDTO drugDTO) {
+    Drug drug = DataModelTransformer.fromDrugDTOToDrug(drugDTO);
+    return Optional.ofNullable(DataModelTransformer.fromDrugToDrugDTO(drugRepository.save(drug)));
   }
 
   @Override
-  public Optional<UserDoctorDTO> updateDoctor(Long id, UserDoctorDTO userDoctorDTO) {
-    return doctorRepository.findById(id).map(entity -> {
-      UserDoctor userDoctor = DataModelTransformer.fromDoctorDTOToDoctor(userDoctorDTO);
-      BeanUtils.copyProperties(userDoctor, entity);
+  public Optional<DrugDTO> updateDrug(Long id, DrugDTO drugDTO) {
+    return drugRepository.findById(id).map(entity -> {
+      Drug drug = DataModelTransformer.fromDrugDTOToDrug(drugDTO);
+      BeanUtils.copyProperties(drug, entity);
       entity.setId(id);
-      return Optional.of(DataModelTransformer.fromDoctorToDoctorDTO(doctorRepository.save(entity)));
+      return Optional.of(DataModelTransformer.fromDrugToDrugDTO(drugRepository.save(entity)));
     }).orElseGet(Optional::empty);
   }
 
   @Override
-  public Boolean deleteDoctorById(Long id) {
-    return doctorRepository.findById(id).map(entity -> {
-      doctorRepository.deleteById(id);
+  public Boolean deleteDrugById(Long id) {
+    return drugRepository.findById(id).map(entity -> {
+      drugRepository.deleteById(id);
       return true;
     }).orElseGet(() -> false);
   }
 
   @Override
-  public Boolean deleteAllDoctors() {
-    doctorRepository.deleteAll();
-    return doctorRepository.count() == 0L;
+  public Boolean deleteAllDrugs() {
+    drugRepository.deleteAll();
+    return drugRepository.count() == 0L;
   }
 }

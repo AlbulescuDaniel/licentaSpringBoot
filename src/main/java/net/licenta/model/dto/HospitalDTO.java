@@ -1,5 +1,8 @@
 package net.licenta.model.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.NotNull;
 
 public class HospitalDTO {
@@ -17,6 +20,11 @@ public class HospitalDTO {
   
   @NotNull(message = "{address.notNull}")
   private AddressDTO addressDTO;
+  
+  @NotNull
+  private String webSite;
+  
+  private Set<UserDoctorDTO> doctorsDTO = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -57,6 +65,20 @@ public class HospitalDTO {
   public void setAddressDTO(AddressDTO addressDTO) {
     this.addressDTO = addressDTO;
   }
-  
-  
+
+  public String getWebSite() {
+    return webSite;
+  }
+
+  public void setWebSite(String webSite) {
+    this.webSite = webSite;
+  }
+
+  public Set<UserDoctorDTO> getDoctorsDTO() {
+    return doctorsDTO;
+  }
+
+  public void setDoctorsDTO(Set<UserDoctorDTO> doctorsDTO) {
+    this.doctorsDTO = doctorsDTO;
+  }
 }

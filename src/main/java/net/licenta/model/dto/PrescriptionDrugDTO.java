@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PrescriptionDrugDTO {
   
   private Long id;
-  private Boolean checked;
   private String description;
   private Integer pillsNumber;
   @JsonIgnore
@@ -27,14 +26,6 @@ public class PrescriptionDrugDTO {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Boolean getChecked() {
-    return checked;
-  }
-
-  public void setChecked(Boolean checked) {
-    this.checked = checked;
   }
 
   public String getDescription() {

@@ -27,7 +27,8 @@ import net.licenta.repository.PatientRepository;
 @RestController("/test")
 @SpringBootApplication
 public class LicentaApplication {
-
+  
+  private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
   private DoctorRepository doctorRepository;
   private PatientRepository patientRepository;
   private DrugRepository drugRepository;
@@ -91,14 +92,12 @@ public class LicentaApplication {
       userDoctor.setEmail("doctor@doctor@gmail.com");
       userDoctor.setFirstName("doctor");
       userDoctor.setLastName("doctor");
-      userDoctor.setPassword("\"$2a$10$4ij54b/qMsS84pTjejjOvOovqr0b6Zmz64s7Q3dxo32YmgyHGV.4W\"");
+      userDoctor.setPassword(bCryptPasswordEncoder.encode("aA1!aaaa"));
       userDoctor.setPhoneNumber("1234");
       userDoctor.setRoleType(RoleType.DOC);
       userDoctor.setUserName("abc");
       userDoctor.setAddress(address);
-      this.doctorRepository.save(userDoctor);
-      System.out.println("Doctors: " + this.doctorRepository.count());
-
+     
       UserPatient userPatient = new UserPatient();
       userPatient.setId(1L);
       userPatient.setAddress(address);
@@ -108,28 +107,37 @@ public class LicentaApplication {
       userPatient.setFirstName("patient");
       userPatient.setGender(UserGender.Male);
       userPatient.setLastName("patient");
-      userPatient.setPassword("\"$2a$10$4ij54b/qMsS84pTjejjOvOovqr0b6Zmz64s7Q3dxo32YmgyHGV.4W\"");
+      userPatient.setPassword(bCryptPasswordEncoder.encode("aA1!aaaa"));
       userPatient.setPhoneNumber("43211");
       userPatient.setUserName("asd");
       userPatient.setRoleType(RoleType.PAT);
-      this.patientRepository.save(userPatient);
-      System.out.println("Patients: " + this.patientRepository.count());
 
       Drug drug = new Drug();
       drug.setActiveComponent("malai");
       drug.setDescription("mamaliga");
       drug.setId(1L);
       drug.setManufacturer("moara cu noroc");
-      drug.setName("haha");
-      this.drugRepository.save(drug);
-      System.out.println("Drugs: " + this.drugRepository.count());
+      drug.setName("malai");
       
       Hospital hospital = new Hospital();
       hospital.setId(1L);
       hospital.setAddress(address);
       hospital.setName("Judetean");
-      hospital.setPhone("112");
+      hospital.setPhone("0238.720689");
       hospital.setUrc("001927812");
+      hospital.setWebSite("https://www.spitalulbuzau.ro/");
+      hospital.getDoctors().add(userDoctor);
+      
+      userDoctor.setHospital(hospital);
+      
+      this.doctorRepository.save(userDoctor);
+      System.out.println("Doctors: " + this.doctorRepository.count());
+      
+      this.patientRepository.save(userPatient);
+      System.out.println("Patients: " + this.patientRepository.count());
+      
+      this.drugRepository.save(drug);
+      System.out.println("Drugs: " + this.drugRepository.count());
       
       this.hospitalRepository.save(hospital);
       System.out.println("Hospitals: " + this.hospitalRepository.count());
