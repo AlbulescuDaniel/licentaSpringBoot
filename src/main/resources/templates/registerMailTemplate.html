@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+	<h2>Hello!</h2>
+	<p>
+		<span th:text="'	Welcome to YourHealth '"></span>
+	</p>
+	<p>
+		<span th:text="'	You can login now using the following: '"></span>
+	</p>
+	<br>
+	<p>
+		<span th:text="'		Username: ' + ${userName}"></span>
+	</p>
+	
+		<p>
+		<span th:text="'		Password: ' + ${password}"></span>
+	</p>
+	<br>
+	<p>
+		<span th:text="'Thank you for using our app!'"></span> <br> <span
+			th:text="'YourHealth team!'"> </span>
+	</p>
+</body>
+</html>

@@ -24,6 +24,9 @@ public class HospitalDTO {
   @NotNull
   private String webSite;
   
+  @NotNull
+  private String email;
+  
   private Set<UserDoctorDTO> doctorsDTO = new HashSet<>();
 
   public Long getId() {
@@ -80,5 +83,13 @@ public class HospitalDTO {
 
   public void setDoctorsDTO(Set<UserDoctorDTO> doctorsDTO) {
     this.doctorsDTO = doctorsDTO;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 }

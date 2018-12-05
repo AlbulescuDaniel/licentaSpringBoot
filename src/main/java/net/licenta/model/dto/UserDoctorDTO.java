@@ -14,7 +14,10 @@ public class UserDoctorDTO extends UserDTO{
   @NotNull(message = "{user.lastName.notNull}")
   @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z ]{2,64}\\b$", message = "{user.lastName.format}")
   private String lastName;
-
+  
+  @NotNull
+  private String speciality;
+  
   @Override
   public String toString() {
     return new ToStringBuilder(this).append("firstName", firstName).append("lastName", lastName).toString();
@@ -34,5 +37,13 @@ public class UserDoctorDTO extends UserDTO{
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
+  }
+
+  public String getSpeciality() {
+    return speciality;
+  }
+
+  public void setSpeciality(String speciality) {
+    this.speciality = speciality;
   }
 }

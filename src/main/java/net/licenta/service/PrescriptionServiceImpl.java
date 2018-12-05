@@ -15,11 +15,14 @@ import org.springframework.stereotype.Service;
 import net.licenta.Constants;
 import net.licenta.error.ErrorDetailsNotFound;
 import net.licenta.model.dto.PrescriptionDTO;
+import net.licenta.model.dto.PrescriptionDetailsDTO;
 import net.licenta.model.dto.PrescriptionDrugDTO;
 import net.licenta.model.entity.Drug;
+import net.licenta.model.entity.Hospital;
 import net.licenta.model.entity.Prescription;
 import net.licenta.model.entity.PrescriptionDrug;
 import net.licenta.model.util.DataModelTransformer;
+import net.licenta.repository.DoctorRepository;
 import net.licenta.repository.DrugRepository;
 import net.licenta.repository.PatientRepository;
 import net.licenta.repository.PrescriptionRepository;
@@ -36,6 +39,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
   @Autowired
   DrugRepository drugRepository;
+
+  @Autowired
+  DoctorRepository doctorRepository;
 
   @Override
   public Set<PrescriptionDTO> getAllPrescriptions() {
@@ -63,11 +69,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescriptionDrug.setPrescription(prescription);
         return prescriptionDrug;
       }).collect(Collectors.toList());
-      
+
       prescription.setPatient(patient);
       prescription.setPrescriptionDrugs(prescriptionDrugs);
       return Optional.ofNullable(DataModelTransformer.fromPrescriptionToPrescriptionDTO(prescriptionRepository.save(prescription)));
-    }).orElseGet(Optional::empty);
+    }).orElseThrow(() -> new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_PATIENT_NAME_DO_NOT_EXIST)));
   }
 
   @Override
@@ -104,8 +110,22 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
   @Override
   public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName, LocalDate startDate, LocalDate endDate) {
-    return patientRepository.findByFirstNameAndLastName(firstName, lastName).map(patient -> prescriptionRepository.findByPatientAndDatePrescriptedBetween(patient, startDate, endDate).stream()
-        .map(DataModelTransformer::fromPrescriptionToPrescriptionDTO).collect(Collectors.toSet())).orElseThrow(() -> new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND,
-            ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_USER_DO_NOT_FOUND)));
+    return patientRepository.findByFirstNameAndLastName(firstName, lastName)
+        .map(patient -> prescriptionRepository.findByPatientAndDatePrescriptedBetween(patient, startDate, endDate).stream().map(DataModelTransformer::fromPrescriptionToPrescriptionDTO)
+            .collect(Collectors.toSet()))
+        .orElseThrow(() -> new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_USER_DO_NOT_FOUND)));
+  }
+
+  @Override
+  public Optional<PrescriptionDetailsDTO> getPrescriptionDetails(Long id) {
+    return prescriptionRepository.findById(id).map(prescription -> doctorRepository.findByUserName(prescription.getCreationUser()).map(doctor -> {
+      Hospital hospital = doctor.getHospital();
+      List<PrescriptionDrugDTO> drugDTOs = prescription.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugToPrescriptionDrugDTO).collect(Collectors.toList());
+
+      PrescriptionDetailsDTO prescriptionDetailsDTO = new PrescriptionDetailsDTO(doctor.getFirstName() + " " + doctor.getLastName(), doctor.getSpeciality(), doctor.getEmail(), hospital.getName(),
+          hospital.getAddress().getCity(), hospital.getEmail(), prescription.getDiagnostic(), prescription.getDatePrescripted(), drugDTOs);
+
+      return Optional.ofNullable(prescriptionDetailsDTO);
+    }).orElseGet(Optional::empty)).orElseGet(Optional::empty);
   }
 }

@@ -96,6 +96,7 @@ public class LicentaApplication {
       userDoctor.setPhoneNumber("1234");
       userDoctor.setRoleType(RoleType.DOC);
       userDoctor.setUserName("abc");
+      userDoctor.setSpeciality("General");
       userDoctor.setAddress(address);
      
       UserPatient userPatient = new UserPatient();
@@ -123,24 +124,28 @@ public class LicentaApplication {
       hospital.setId(1L);
       hospital.setAddress(address);
       hospital.setName("Judetean");
-      hospital.setPhone("0238.720689");
+      hospital.setPhone("0268  320022");
       hospital.setUrc("001927812");
-      hospital.setWebSite("https://www.spitalulbuzau.ro/");
-      hospital.getDoctors().add(userDoctor);
-      
-      userDoctor.setHospital(hospital);
+      hospital.setWebSite("http://www.hospbv.ro/");
+      hospital.setEmail("sjbrasov@rdslink.ro");
       
       this.doctorRepository.save(userDoctor);
       System.out.println("Doctors: " + this.doctorRepository.count());
+      
+      this.hospitalRepository.save(hospital);
+      System.out.println("Hospitals: " + this.hospitalRepository.count());
+      
+      userDoctor.setHospital(hospital);
+      this.doctorRepository.save(userDoctor);
+      
+      hospital.getDoctors().add(userDoctor);
+      this.hospitalRepository.save(hospital);
       
       this.patientRepository.save(userPatient);
       System.out.println("Patients: " + this.patientRepository.count());
       
       this.drugRepository.save(drug);
       System.out.println("Drugs: " + this.drugRepository.count());
-      
-      this.hospitalRepository.save(hospital);
-      System.out.println("Hospitals: " + this.hospitalRepository.count());
     };
   }
 }

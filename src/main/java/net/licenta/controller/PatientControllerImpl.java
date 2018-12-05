@@ -24,6 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.licenta.model.dto.CreatePatientDTO;
 import net.licenta.model.dto.UserPatientDTO;
 import net.licenta.service.PatientService;
 
@@ -33,8 +34,6 @@ import net.licenta.service.PatientService;
 public class PatientControllerImpl implements PatientController {
 
   private static final Logger log = LoggerFactory.getLogger(PatientControllerImpl.class);
-
-  private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
   @Autowired
   PatientService patientService;
@@ -67,8 +66,7 @@ public class PatientControllerImpl implements PatientController {
       @ApiResponse(code = 409, message = "Creating new patient failed.", response = Error.class) })
   @PostMapping
   @Override
-  public ResponseEntity<UserPatientDTO> createPatient(@Valid @RequestBody UserPatientDTO userPatientDTO) {
-    userPatientDTO.setPassword(bCryptPasswordEncoder.encode(userPatientDTO.getPassword()));
+  public ResponseEntity<UserPatientDTO> createPatient(@Valid @RequestBody CreatePatientDTO userPatientDTO) {
     return patientService.createPatient(userPatientDTO).map(entity -> {
       log.info("Created patient with fields: {}", userPatientDTO);
       return new ResponseEntity<>(entity, HttpStatus.CREATED);

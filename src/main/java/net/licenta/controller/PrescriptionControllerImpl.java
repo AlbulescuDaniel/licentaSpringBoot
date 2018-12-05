@@ -28,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import net.licenta.model.dto.PrescriptionDTO;
+import net.licenta.model.dto.PrescriptionDetailsDTO;
 import net.licenta.service.PrescriptionService;
 
 @Api(value = "Prescription API")
@@ -119,5 +120,14 @@ public class PrescriptionControllerImpl implements PrescriptionController {
 
     log.info("Returned {} prescriptions from patient with firstname = {} and lastname = {}", prescriptionDTOs.size(), firstName, lastName);
     return new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK);
+  }
+
+  @GetMapping("/details/{id}")
+  @Override
+  public ResponseEntity<PrescriptionDetailsDTO> getPrescriptionDetails(@PathVariable Long id) {
+    return prescriptionService.getPrescriptionDetails(id).map(entity -> {
+      log.info("Prescription with id {} returned", id);
+      return new ResponseEntity<>(entity, HttpStatus.OK);
+    }).orElseGet(() -> new ResponseEntity<PrescriptionDetailsDTO>(HttpStatus.NOT_FOUND));
   }
 }

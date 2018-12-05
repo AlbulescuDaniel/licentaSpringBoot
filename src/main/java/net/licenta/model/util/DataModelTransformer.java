@@ -3,6 +3,7 @@ package net.licenta.model.util;
 import java.util.stream.Collectors;
 
 import net.licenta.model.dto.AddressDTO;
+import net.licenta.model.dto.CreatePatientDTO;
 import net.licenta.model.dto.DrugDTO;
 import net.licenta.model.dto.HospitalDTO;
 import net.licenta.model.dto.PrescriptionDTO;
@@ -81,6 +82,20 @@ public class DataModelTransformer {
 
     return userPatient;
   }
+  
+  public static UserPatient fromCreatePatientDTOToPatient(CreatePatientDTO createPatientDTO) {
+    UserPatient userPatient = new UserPatient();
+    userPatient.setGender(createPatientDTO.getGender());
+    userPatient.setFirstName(createPatientDTO.getFirstName());
+    userPatient.setLastName(createPatientDTO.getLastName());
+    userPatient.setEmail(createPatientDTO.getEmail());
+    userPatient.setPhoneNumber(createPatientDTO.getPhoneNumber());
+    userPatient.setCnp(createPatientDTO.getCnp());
+    userPatient.setBirthDate(createPatientDTO.getBirthDate());
+    userPatient.setAddress(fromAddressDTOToAddress(createPatientDTO.getAddress()));
+
+    return userPatient;
+  }
 
   public static UserDoctorDTO fromDoctorToDoctorDTO(UserDoctor userDoctor) {
     UserDoctorDTO userDoctorDTO = new UserDoctorDTO();
@@ -89,6 +104,7 @@ public class DataModelTransformer {
     userDoctorDTO.setLastName(userDoctor.getLastName());
     userDoctorDTO.setUserName(userDoctor.getUserName());
     userDoctorDTO.setEmail(userDoctor.getEmail());
+    userDoctorDTO.setSpeciality(userDoctor.getSpeciality());
     userDoctorDTO.setPhoneNumber(userDoctor.getPhoneNumber());
     userDoctorDTO.setPassword(userDoctor.getPassword());
     userDoctorDTO.setAddressDTO(fromAddressToAddressDTO(userDoctor.getAddress()));
@@ -104,6 +120,7 @@ public class DataModelTransformer {
     userDoctor.setUserName(userDoctorDTO.getUserName());
     userDoctor.setEmail(userDoctorDTO.getEmail());
     userDoctor.setPhoneNumber(userDoctorDTO.getPhoneNumber());
+    userDoctor.setSpeciality(userDoctorDTO.getSpeciality());
     userDoctor.setPassword(userDoctorDTO.getPassword());
     userDoctor.setAddress(fromAddressDTOToAddress(userDoctorDTO.getAddressDTO()));
 
@@ -222,6 +239,7 @@ public class DataModelTransformer {
     hospital.setUrc(hospitalDTO.getUrc());
     hospital.setAddress(fromAddressDTOToAddress(hospitalDTO.getAddressDTO()));
     hospital.setWebSite(hospitalDTO.getWebSite());
+    hospital.setEmail(hospitalDTO.getEmail());
     hospital.setDoctors(hospitalDTO.getDoctorsDTO().stream().map(DataModelTransformer::fromDoctorDTOToDoctor).collect(Collectors.toSet()));
 
     return hospital;
@@ -235,14 +253,15 @@ public class DataModelTransformer {
     hospitalDTO.setUrc(hospital.getUrc());
     hospitalDTO.setAddressDTO(fromAddressToAddressDTO(hospital.getAddress()));
     hospitalDTO.setWebSite(hospital.getWebSite());
+    hospitalDTO.setEmail(hospital.getEmail());
     hospitalDTO.setDoctorsDTO(hospital.getDoctors().stream().map(DataModelTransformer::fromDoctorToDoctorDTO).collect(Collectors.toSet()));
 
     return hospitalDTO;
   }
-  
+
   public static PrescriptionDoctorHospitalDTO fromDoctorToPrescriptionDoctorHospitalDTO(UserDoctor doctor) {
     Hospital hospital = doctor.getHospital();
-    
+
     PrescriptionDoctorHospitalDTO prescriptionDoctorHospitalDTO = new PrescriptionDoctorHospitalDTO();
     prescriptionDoctorHospitalDTO.setDoctorEmail(doctor.getEmail());
     prescriptionDoctorHospitalDTO.setHospitalName(hospital.getName());

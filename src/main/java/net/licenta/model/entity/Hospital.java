@@ -32,6 +32,9 @@ public class Hospital {
   private String phone;
   
   @Column
+  private String email;
+  
+  @Column
   private String webSite;
 
   @Embedded
@@ -99,5 +102,13 @@ public class Hospital {
 
   public void setDoctors(Set<UserDoctor> doctors) {
     this.doctors = doctors;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 }

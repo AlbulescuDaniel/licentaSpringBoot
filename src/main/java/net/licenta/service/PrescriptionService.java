@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import net.licenta.model.dto.PrescriptionDTO;
+import net.licenta.model.dto.PrescriptionDetailsDTO;
 
 public interface PrescriptionService {
 
@@ -21,4 +22,6 @@ public interface PrescriptionService {
   public Boolean deleteAllPrescriptions();
 
   public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
+
+  public Optional<PrescriptionDetailsDTO> getPrescriptionDetails(Long id);
 }

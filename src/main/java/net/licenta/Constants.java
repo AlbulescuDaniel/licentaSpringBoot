@@ -13,10 +13,12 @@ public class Constants {
   public static final String MESSAGE_BUNDLE = "messages";
   public static final String NOT_FOUND = "Not found";
   public static final String BAD_REQUEST = "Bad request";
-  
+  public static final String EMAIL_ERROR = "Email error";
+
   public static final String BUNDLE_ROLE_FIND_BY_CODE = "role.find.ByCode";
   public static final String BUNDLE_USER_DO_NOT_FOUND = "user.find.username";
   public static final String BUNDLE_PRESCRIPTION_CREATE_NO_DRUGS = "prescription.drugs.notFound";
-  public static final String BUNDLE_PATIENT_DO_NOT_EXIST = "prescription.drugs.notFound";;
-
+  public static final String BUNDLE_PATIENT_DO_NOT_EXIST = "prescription.drugs.notFound";
+  public static final String BUNDLE_PATIENT_NAME_DO_NOT_EXIST = "patient.name.notFound";
+  public static final String BUNDLE_EMAIL_SEND_FAILED = "email.send.failed";
 }

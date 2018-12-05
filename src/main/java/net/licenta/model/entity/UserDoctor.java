@@ -21,6 +21,9 @@ public class UserDoctor extends User {
 
   @Column(name = "LAST_NAME")
   private String lastName;
+  
+  @Column(name = "SPECIALITY")
+  private String speciality;
 
   @JoinColumn(name = "ID_HOSPITAL")
   @ManyToOne(cascade  = CascadeType.DETACH)
@@ -53,5 +56,13 @@ public class UserDoctor extends User {
 
   public void setHospital(Hospital hospital) {
     this.hospital = hospital;
+  }
+
+  public String getSpeciality() {
+    return speciality;
+  }
+
+  public void setSpeciality(String speciality) {
+    this.speciality = speciality;
   }
 }
