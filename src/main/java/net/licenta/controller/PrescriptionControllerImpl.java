@@ -82,7 +82,7 @@ public class PrescriptionControllerImpl implements PrescriptionController {
       @ApiResponse(code = 400, message = "Prescription fields are invalid.", response = Error.class) })
   @PutMapping("/{id}")
   @Override
-  public ResponseEntity<PrescriptionDTO> updatePrescription(@Valid Long id, @Valid @RequestBody PrescriptionDTO prescriptionDTO) {
+  public ResponseEntity<PrescriptionDTO> updatePrescription(@PathVariable Long id, @Valid @RequestBody PrescriptionDTO prescriptionDTO) {
     return prescriptionService.updatePrescription(id, prescriptionDTO).map(entity -> {
       log.info("Updated prescription with id {} with fields: {}", id, prescriptionDTO);
       return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -94,7 +94,7 @@ public class PrescriptionControllerImpl implements PrescriptionController {
       @ApiResponse(code = 404, message = "The prescription was not found or the registrations are open for the specified event.", response = Error.class) })
   @DeleteMapping("/{id}")
   @Override
-  public ResponseEntity<HttpStatus> deletePrescriptionById(@Valid Long id) {
+  public ResponseEntity<HttpStatus> deletePrescriptionById(@PathVariable Long id) {
     log.info("Delete prescription with id {}", id);
     HttpStatus http = prescriptionService.deletePrescriptionById(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
     return new ResponseEntity<>(http);
@@ -129,5 +129,16 @@ public class PrescriptionControllerImpl implements PrescriptionController {
       log.info("Prescription with id {} returned", id);
       return new ResponseEntity<>(entity, HttpStatus.OK);
     }).orElseGet(() -> new ResponseEntity<PrescriptionDetailsDTO>(HttpStatus.NOT_FOUND));
+  }
+
+  @GetMapping("/patient/{userName}")
+  @Override
+  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientUserNameAndDateBetwwen(@PathVariable String userName,
+      @RequestParam(name = "startDate") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate, @RequestParam(name = "endDate") @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
+    Set<PrescriptionDTO> prescriptionDTOs = (startDate != null || endDate != null) ? prescriptionService.getPatientPrescriptionsByPatientUserNameAndDateBetwwen(userName, startDate, endDate)
+        : prescriptionService.getPatientPrescriptionsByPatientUserNameAndDateBetwwen(userName, LocalDate.now().minusYears(1), LocalDate.now());
+
+    log.info("Returned {} prescriptions from patient with userName = {} }", prescriptionDTOs.size(), userName);
+    return new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK);
   }
 }

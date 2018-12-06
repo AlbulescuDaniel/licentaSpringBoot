@@ -2,6 +2,7 @@ package net.licenta.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -127,5 +128,13 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
       return Optional.ofNullable(prescriptionDetailsDTO);
     }).orElseGet(Optional::empty)).orElseGet(Optional::empty);
+  }
+
+  @Override
+  public Set<PrescriptionDTO> getPatientPrescriptionsByPatientUserNameAndDateBetwwen(String userName, LocalDate startDate, LocalDate endDate) {
+    return patientRepository.findByUserName(userName)
+        .map(patient -> prescriptionRepository.findByPatientAndDatePrescriptedBetween(patient, startDate, endDate).stream().map(DataModelTransformer::fromPrescriptionToPrescriptionDTO)
+            .collect(Collectors.toSet()))
+        .orElseThrow(() -> new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_USER_DO_NOT_FOUND)));
   }
 }

@@ -24,4 +24,6 @@ public interface PrescriptionService {
   public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
 
   public Optional<PrescriptionDetailsDTO> getPrescriptionDetails(Long id);
+
+  public Set<PrescriptionDTO> getPatientPrescriptionsByPatientUserNameAndDateBetwwen(String userName, LocalDate minusYears, LocalDate now);
 }
