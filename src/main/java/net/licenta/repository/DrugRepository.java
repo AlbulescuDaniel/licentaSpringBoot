@@ -1,13 +1,18 @@
 package net.licenta.repository;
 
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 
 import net.licenta.model.entity.Drug;
 
 public interface DrugRepository extends JpaRepository<Drug, Long>{
   
-  public Set<Drug> findByNameIn(Set<String> names);
+  public Optional<Drug> findByNameIgnoreCase(String name);
+
+  public List<Drug> findByNameContainingIgnoreCase(String name);
+
 
 }

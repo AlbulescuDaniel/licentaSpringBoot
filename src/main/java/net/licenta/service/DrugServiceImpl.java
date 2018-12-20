@@ -1,7 +1,8 @@
 package net.licenta.service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.Set;import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -57,5 +58,10 @@ public class DrugServiceImpl implements DrugService {
   public Boolean deleteAllDrugs() {
     drugRepository.deleteAll();
     return drugRepository.count() == 0L;
+  }
+
+  @Override
+  public List<DrugDTO> getDrugByPartialName(String name) {
+    return drugRepository.findByNameContainingIgnoreCase(name).stream().map(DataModelTransformer::fromDrugToDrugDTO).collect(Collectors.toList());
   }
 }

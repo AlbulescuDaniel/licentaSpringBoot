@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.licenta.model.dto.PrescriptionDTO;
 import net.licenta.model.dto.PrescriptionDetailsDTO;
+import net.licenta.model.dto.PrescriptionWithPatientNameDTO;
 
 public interface PrescriptionService {
 
@@ -21,9 +22,11 @@ public interface PrescriptionService {
   
   public Boolean deleteAllPrescriptions();
 
-  public Set<PrescriptionDTO> getPatientPrescriptionsByPatientName(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
+  public Set<PrescriptionWithPatientNameDTO> getPatientPrescriptionsByPatientFirstNameAndLastName(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
 
   public Optional<PrescriptionDetailsDTO> getPrescriptionDetails(Long id);
 
   public Set<PrescriptionDTO> getPatientPrescriptionsByPatientUserNameAndDateBetwwen(String userName, LocalDate minusYears, LocalDate now);
+
+  public Set<PrescriptionWithPatientNameDTO> getPatientPrescriptionsByPatientFirstName(String firstName, LocalDate startDate, LocalDate endDate);
 }

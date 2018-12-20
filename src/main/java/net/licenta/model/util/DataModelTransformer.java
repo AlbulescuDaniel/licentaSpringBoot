@@ -9,6 +9,7 @@ import net.licenta.model.dto.HospitalDTO;
 import net.licenta.model.dto.PrescriptionDTO;
 import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.PrescriptionDrugDTO;
+import net.licenta.model.dto.PrescriptionWithPatientNameDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.dto.UserPatientDTO;
 import net.licenta.model.dto.UserPharmacyDTO;
@@ -82,7 +83,7 @@ public class DataModelTransformer {
 
     return userPatient;
   }
-  
+
   public static UserPatient fromCreatePatientDTOToPatient(CreatePatientDTO createPatientDTO) {
     UserPatient userPatient = new UserPatient();
     userPatient.setGender(createPatientDTO.getGender());
@@ -156,10 +157,20 @@ public class DataModelTransformer {
   public static DrugDTO fromDrugToDrugDTO(Drug drug) {
     DrugDTO drugDTO = new DrugDTO();
     drugDTO.setId(drug.getId());
-    drugDTO.setActiveComponent(drug.getActiveComponent());
-    drugDTO.setDescription(drug.getDescription());
-    drugDTO.setManufacturer(drug.getManufacturer());
     drugDTO.setName(drug.getName());
+    drugDTO.setAdministrationMethod(drug.getAdministrationMethod());
+    drugDTO.setComposition(drug.getComposition());
+    drugDTO.setContraindications(drug.getContraindications());
+    drugDTO.setExcipients(drug.getExcipients());
+    drugDTO.setIncompatibilities(drug.getIncompatibilities());
+    drugDTO.setMarketingAuthorisationHolder(drug.getMarketingAuthorisationHolder());
+    drugDTO.setOverdose(drug.getOverdose());
+    drugDTO.setPharmaceuticalForm(drug.getPharmaceuticalForm());
+    drugDTO.setPharmacokineticProperties(drug.getPharmacokineticProperties());
+    drugDTO.setShelfLife(drug.getShelfLife());
+    drugDTO.setSpecialPrecautionsForStorage(drug.getSpecialPrecautionsForStorage());
+    drugDTO.setSpecialWarnings(drug.getSpecialWarnings());
+    drugDTO.setTherapeuticIndications(drug.getTherapeuticIndications());
 
     return drugDTO;
   }
@@ -167,10 +178,20 @@ public class DataModelTransformer {
   public static Drug fromDrugDTOToDrug(DrugDTO drugDTO) {
     Drug drug = new Drug();
     drug.setId(drugDTO.getId());
-    drug.setActiveComponent(drugDTO.getActiveComponent());
-    drug.setDescription(drugDTO.getDescription());
-    drug.setManufacturer(drugDTO.getManufacturer());
     drug.setName(drugDTO.getName());
+    drug.setAdministrationMethod(drugDTO.getAdministrationMethod());
+    drug.setComposition(drugDTO.getComposition());
+    drug.setContraindications(drugDTO.getContraindications());
+    drug.setExcipients(drugDTO.getExcipients());
+    drug.setIncompatibilities(drugDTO.getIncompatibilities());
+    drug.setMarketingAuthorisationHolder(drugDTO.getMarketingAuthorisationHolder());
+    drug.setOverdose(drugDTO.getOverdose());
+    drug.setPharmaceuticalForm(drugDTO.getPharmaceuticalForm());
+    drug.setPharmacokineticProperties(drugDTO.getPharmacokineticProperties());
+    drug.setShelfLife(drugDTO.getShelfLife());
+    drug.setSpecialPrecautionsForStorage(drugDTO.getSpecialPrecautionsForStorage());
+    drug.setSpecialWarnings(drugDTO.getSpecialWarnings());
+    drug.setTherapeuticIndications(drugDTO.getTherapeuticIndications());
 
     return drug;
   }
@@ -226,6 +247,36 @@ public class DataModelTransformer {
     prescription.setPatientType(prescriptionDTO.getPatientType());
     prescription.setDatePrescripted(prescriptionDTO.getDatePrescripted());
 
+    prescription.setPrescriptionDrugs(prescriptionDTO.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugDTOToPrescriptionDrug).collect(Collectors.toList()));
+
+    return prescription;
+  }
+
+  public static PrescriptionWithPatientNameDTO fromPrescriptionToPrescriptionWithPatientNameDTO(Prescription prescription) {
+    PrescriptionWithPatientNameDTO prescriptionDTO = new PrescriptionWithPatientNameDTO();
+    prescriptionDTO.setPrescriptionNumber(prescription.getPrescriptionNumber());
+    prescriptionDTO.setUserGender(prescription.getUserGender());
+    prescriptionDTO.setNationality(prescription.getNationality());
+    prescriptionDTO.setHospitalType(prescription.getHospitalType());
+    prescriptionDTO.setPatientType(prescription.getPatientType());
+    prescriptionDTO.setId(prescription.getId());
+    prescriptionDTO.setDiagnostic(prescription.getDiagnostic());
+    prescriptionDTO.setDatePrescripted(prescription.getDatePrescripted());
+    prescriptionDTO.setPrescriptionDrugs(prescription.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugToPrescriptionDrugDTO).collect(Collectors.toList()));
+
+    return prescriptionDTO;
+  }
+
+  public static Prescription fromPrescriptionWithPatientNameDTOToPrescription(PrescriptionWithPatientNameDTO prescriptionDTO) {
+    Prescription prescription = new Prescription();
+    prescription.setId(prescriptionDTO.getId());
+    prescription.setDiagnostic(prescriptionDTO.getDiagnostic());
+    prescription.setPrescriptionNumber(prescriptionDTO.getPrescriptionNumber());
+    prescription.setUserGender(prescriptionDTO.getUserGender());
+    prescription.setNationality(prescriptionDTO.getNationality());
+    prescription.setHospitalType(prescriptionDTO.getHospitalType());
+    prescription.setPatientType(prescriptionDTO.getPatientType());
+    prescription.setDatePrescripted(prescriptionDTO.getDatePrescripted());
     prescription.setPrescriptionDrugs(prescriptionDTO.getPrescriptionDrugs().stream().map(DataModelTransformer::fromPrescriptionDrugDTOToPrescriptionDrug).collect(Collectors.toList()));
 
     return prescription;

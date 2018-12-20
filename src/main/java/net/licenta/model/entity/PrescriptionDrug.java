@@ -12,8 +12,6 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Table(name = "T_PRESCRIPTION_DRUG")
 @Entity
 public class PrescriptionDrug {

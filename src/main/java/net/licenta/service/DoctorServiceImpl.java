@@ -68,10 +68,11 @@ public class DoctorServiceImpl implements DoctorService {
   @Override
   public Optional<PrescriptionDoctorHospitalDTO> getDoctorAndHospitalforAutocomplete(String userName) {
     return doctorRepository.findByUserName(userName).map(entity -> {
+      System.out.println("Intra");
       PrescriptionDoctorHospitalDTO  prescriptionDoctorHospitalDTO = DataModelTransformer.fromDoctorToPrescriptionDoctorHospitalDTO(entity);
       prescriptionDoctorHospitalDTO.setPrescriptionNumber(prescriptionRepository.findTopByOrderByIdDesc().map(Prescription::getId).orElseGet(() -> 0L) + 1);
-      
-      return prescriptionDoctorHospitalDTO;
-    });
+      System.out.println(prescriptionDoctorHospitalDTO);
+      return Optional.ofNullable(prescriptionDoctorHospitalDTO);
+    }).orElseGet(Optional::empty);
   }
 }

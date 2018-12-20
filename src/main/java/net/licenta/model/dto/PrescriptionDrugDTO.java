@@ -59,4 +59,9 @@ public class PrescriptionDrugDTO {
   public void setDrug(String drug) {
     this.drug = drug;
   }
+
+  @Override
+  public String toString() {
+    return "PrescriptionDrugDTO [id=" + id + ", description=" + description + ", pillsNumber=" + pillsNumber + ", prescriptionDTO=" + prescriptionDTO + ", drug=" + drug + ", days=" + days + "]";
+  }
 }

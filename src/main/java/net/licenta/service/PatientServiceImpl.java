@@ -57,7 +57,7 @@ public class PatientServiceImpl implements PatientService {
 
     patient.setUserName(userName);
     int count = 0;
-    while (patientRepository.findByUserName(userName).isPresent()) {
+    while (patientRepository.findByUserNameIgnoreCase(userName).isPresent()) {
       count++;
       userName = createPatientDTO.getFirstName() + "." + createPatientDTO.getLastName() + count;
       patient.setUserName(userName);
@@ -105,7 +105,7 @@ public class PatientServiceImpl implements PatientService {
     MimeMessagePreparator messagePreparator = mimeMessage -> {
       MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
       messageHelper.setTo(to);
-      messageHelper.setSubject("Please activate your account");
+      messageHelper.setSubject("Your account is ready!");
       String content = registerMailContentBuilder.build(userName, passsword);
       messageHelper.setText(content, true);
     };

@@ -1,6 +1,7 @@
 package net.licenta.controller;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -29,6 +30,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import net.licenta.model.dto.PrescriptionDTO;
 import net.licenta.model.dto.PrescriptionDetailsDTO;
+import net.licenta.model.dto.PrescriptionWithPatientNameDTO;
 import net.licenta.service.PrescriptionService;
 
 @Api(value = "Prescription API")
@@ -113,13 +115,50 @@ public class PrescriptionControllerImpl implements PrescriptionController {
 
   @GetMapping("/patient")
   @Override
-  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientNameAndDateBetwwen(@RequestParam("firstName") String firstName, @RequestParam(value = "lastName") String lastName,
-      @RequestParam(name = "startDate") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate, @RequestParam(name = "endDate") @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
-    Set<PrescriptionDTO> prescriptionDTOs = (startDate != null || endDate != null) ? prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName, startDate, endDate)
-        : prescriptionService.getPatientPrescriptionsByPatientName(firstName, lastName, LocalDate.now().minusYears(1), LocalDate.now());
+  public ResponseEntity<Set<PrescriptionWithPatientNameDTO>> getPatientPrescriptionsByPatientNameAndDateBetwwen(@RequestParam("firstName") String firstName,
+      @RequestParam(value = "lastName", required = false) String lastName, @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+      @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
+    Set<PrescriptionWithPatientNameDTO> prescriptionDTOs = result(firstName, lastName, startDate, endDate);
 
     log.info("Returned {} prescriptions from patient with firstname = {} and lastname = {}", prescriptionDTOs.size(), firstName, lastName);
     return new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK);
+  }
+
+  private Set<PrescriptionWithPatientNameDTO> result(String firstName, String lastName, LocalDate startDate, LocalDate endDate) {
+
+    if (lastName != null) {
+      if (startDate != null && endDate != null) {
+        return prescriptionService.getPatientPrescriptionsByPatientFirstNameAndLastName(firstName, lastName, startDate, endDate);
+      }
+      else {
+        if (startDate == null && endDate != null) {
+          return prescriptionService.getPatientPrescriptionsByPatientFirstNameAndLastName(firstName, lastName, LocalDate.now().minusYears(1), endDate);
+        }
+        if (startDate != null && endDate == null) {
+          return prescriptionService.getPatientPrescriptionsByPatientFirstNameAndLastName(firstName, lastName, startDate, LocalDate.now());
+        }
+        if (startDate == null && endDate == null) {
+          return prescriptionService.getPatientPrescriptionsByPatientFirstNameAndLastName(firstName, lastName, LocalDate.now().minusYears(1), LocalDate.now());
+        }
+      }
+    }
+    else {
+      if (startDate != null && endDate != null) {
+        return prescriptionService.getPatientPrescriptionsByPatientFirstName(firstName, startDate, endDate);
+      }
+      else {
+        if (startDate == null && endDate != null) {
+          return prescriptionService.getPatientPrescriptionsByPatientFirstName(firstName, LocalDate.now().minusYears(1), endDate);
+        }
+        if (startDate != null && endDate == null) {
+          return prescriptionService.getPatientPrescriptionsByPatientFirstName(firstName, startDate, LocalDate.now());
+        }
+        if (startDate == null && endDate == null) {
+          return prescriptionService.getPatientPrescriptionsByPatientFirstName(firstName, LocalDate.now().minusYears(1), LocalDate.now());
+        }
+      }
+    }
+    return new HashSet<>();
   }
 
   @GetMapping("/details/{id}")

@@ -1,5 +1,6 @@
 package net.licenta.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,4 +19,6 @@ public interface DrugService {
   public Boolean deleteDrugById(Long id);
   
   public Boolean deleteAllDrugs();
+
+  public List<DrugDTO> getDrugByPartialName(String name);
 }

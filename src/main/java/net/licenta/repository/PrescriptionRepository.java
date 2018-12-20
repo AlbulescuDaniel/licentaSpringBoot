@@ -11,7 +11,7 @@ import net.licenta.model.entity.UserPatient;
 
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
 
-  public Set<Prescription> findByPatientAndDatePrescriptedBetween(UserPatient patient, LocalDate startDate, LocalDate endDate);
+  public Set<Prescription> findByPatientAndDatePrescriptedBetweenOrderByDatePrescriptedAscIdAsc(UserPatient patient, LocalDate startDate, LocalDate endDate);
 
-  Optional<Prescription> findTopByOrderByIdDesc();
+  public Optional<Prescription> findTopByOrderByIdDesc();
 }

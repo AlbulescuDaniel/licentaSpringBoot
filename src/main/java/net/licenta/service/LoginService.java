@@ -36,7 +36,7 @@ public class LoginService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) {
 
-    Optional<UserPatient> userPatient = patientRepository.findByUserName(username);
+    Optional<UserPatient> userPatient = patientRepository.findByUserNameIgnoreCase(username);
     if (userPatient.isPresent()) {
       return new org.springframework.security.core.userdetails.User(userPatient.get().getUserName(), userPatient.get().getPassword(), getAuthority(userPatient.get()));
     }

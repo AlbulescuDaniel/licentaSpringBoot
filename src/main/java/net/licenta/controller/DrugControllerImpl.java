@@ -1,5 +1,6 @@
 package net.licenta.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -96,13 +98,24 @@ public class DrugControllerImpl implements DrugController {
   }
 
   @ApiOperation(value = "Delete all the drugs from the database.")
-  @ApiResponses(value = { @ApiResponse(code = 200, message = "All the drugs were succesfully deleted."),
-      @ApiResponse(code = 404, message = "All the drugs were not deleted deleted.", response = Error.class) })
+  @ApiResponses(value = { @ApiResponse(code = 200, message = "All the drugs were succesfully deleted."), @ApiResponse(code = 404, message = "Drugs were not deleted.", response = Error.class) })
   @DeleteMapping
   @Override
   public ResponseEntity<HttpStatus> deleteAllDrugs() {
     log.info("Delete all drugs");
     HttpStatus http = drugService.deleteAllDrugs() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
     return new ResponseEntity<>(http);
+  }
+
+  @ApiOperation(value = "Return all drugs with the required name.")
+  @ApiResponses(value = { @ApiResponse(code = 200, message = "Drug returned successfully!"),
+      @ApiResponse(code = 404, message = "The drugs with the required name does not exist.", response = Error.class) })
+  @GetMapping("/name")
+  @Override
+  public ResponseEntity<List<DrugDTO>> getDrugByPartialName(@RequestParam(name = "name", required = true) String name) {
+    List<DrugDTO> drugs = drugService.getDrugByPartialName(name);
+    HttpStatus http = !CollectionUtils.isEmpty(drugs) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+    log.info("Returned with containing name {}", name);
+    return new ResponseEntity<>(drugs, http);
   }
 }

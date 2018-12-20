@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import net.licenta.model.dto.PrescriptionDTO;
 import net.licenta.model.dto.PrescriptionDetailsDTO;
+import net.licenta.model.dto.PrescriptionWithPatientNameDTO;
 
 public interface PrescriptionController {
 
@@ -31,7 +32,7 @@ public interface PrescriptionController {
   public ResponseEntity<HttpStatus> deleteAllPrescriptions();
   
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]')")
-  public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientNameAndDateBetwwen(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
+  public ResponseEntity<Set<PrescriptionWithPatientNameDTO>> getPatientPrescriptionsByPatientNameAndDateBetwwen(String firstName, String lastName, LocalDate startDate, LocalDate endDate);
   
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]')")
   public ResponseEntity<Set<PrescriptionDTO>> getPatientPrescriptionsByPatientUserNameAndDateBetwwen(String userName, LocalDate startDate, LocalDate endDate);

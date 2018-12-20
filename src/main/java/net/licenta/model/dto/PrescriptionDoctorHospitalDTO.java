@@ -66,7 +66,16 @@ public class PrescriptionDoctorHospitalDTO {
     return doctorEmail;
   }
 
+  /**
+   * @param doctorEmail
+   */
   public void setDoctorEmail(String doctorEmail) {
     this.doctorEmail = doctorEmail;
+  }
+
+  @Override
+  public String toString() {
+    return "PrescriptionDoctorHospitalDTO [prescriptionNumber=" + prescriptionNumber + ", hospitalName=" + hospitalName + ", hospitalURC=" + hospitalURC + ", hospitalState=" + hospitalState
+        + ", hospitalPhone=" + hospitalPhone + ", doctorEmail=" + doctorEmail + "]";
   }
 }
