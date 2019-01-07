@@ -117,4 +117,9 @@ public class PatientServiceImpl implements PatientService {
       return false;
     }
   }
+
+  @Override
+  public Optional<UserPatientDTO> getPatientByUsername(String userName) {
+    return patientRepository.findByUserNameIgnoreCase(userName).map(entity -> Optional.ofNullable(DataModelTransformer.fromPatientToPatientDTO(entity))).orElseGet(Optional::empty);
+  }
 }

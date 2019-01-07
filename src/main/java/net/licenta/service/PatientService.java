@@ -19,4 +19,6 @@ public interface PatientService {
   public Boolean deletePatientById(Long id);
   
   public Boolean deleteAllPatients();
+
+  public Optional<UserPatientDTO> getPatientByUsername(String userName);
 }

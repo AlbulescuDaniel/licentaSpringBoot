@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -105,5 +106,17 @@ public class PatientControllerImpl implements PatientController {
     log.info("Delete all patients");
     HttpStatus http = patientService.deleteAllPatients() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
     return new ResponseEntity<>(http);
+  }
+  
+  @ApiOperation(value = "Return patient with the required userName.")
+  @ApiResponses(value = { @ApiResponse(code = 200, message = "Patient returned successfully!"),
+      @ApiResponse(code = 404, message = "The patient with the required userName does not exist.", response = Error.class) })
+  @GetMapping("/profile")
+  @Override
+  public ResponseEntity<UserPatientDTO> getPatientByUsername(@RequestParam("userName") String userName) {
+    return patientService.getPatientByUsername(userName).map(entity -> {
+      log.info("Patient with userName {} returned", userName);
+      return new ResponseEntity<>(entity, HttpStatus.OK);
+    }).orElseGet(() -> new ResponseEntity<UserPatientDTO>(HttpStatus.NOT_FOUND));
   }
 }

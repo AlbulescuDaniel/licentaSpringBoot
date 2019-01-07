@@ -84,11 +84,10 @@ public class LicentaApplication {
       address.setPostalCode("12345");
       address.setRegion("Brasov");
       address.setStreet("Infratirii");
-      address.setStreetNumber("1");
+      address.setStreetNumber("21");
 
       UserDoctor userDoctor = new UserDoctor();
       userDoctor.setId(1L);
-      userDoctor.setActivated(true);
       userDoctor.setEmail("doctor@doctor@gmail.com");
       userDoctor.setFirstName("Doctor");
       userDoctor.setLastName("Doctor");

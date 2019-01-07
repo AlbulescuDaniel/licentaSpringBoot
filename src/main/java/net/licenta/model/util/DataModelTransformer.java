@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import net.licenta.model.dto.AddressDTO;
 import net.licenta.model.dto.CreatePatientDTO;
+import net.licenta.model.dto.DoctorProfileDTO;
 import net.licenta.model.dto.DrugDTO;
 import net.licenta.model.dto.HospitalDTO;
 import net.licenta.model.dto.PrescriptionDTO;
@@ -34,6 +35,7 @@ public class DataModelTransformer {
     addressDTO.setCity(address.getCity());
     addressDTO.setRegion(address.getRegion());
     addressDTO.setStreet(address.getStreet());
+    addressDTO.setStreetNumber(address.getStreetNumber());
 
     return addressDTO;
   }
@@ -321,5 +323,22 @@ public class DataModelTransformer {
     prescriptionDoctorHospitalDTO.setHospitalURC(hospital.getUrc());
 
     return prescriptionDoctorHospitalDTO;
+  }
+  
+  public static DoctorProfileDTO fromDoctorToDoctorProfileDTO(UserDoctor userDoctor) {
+    Hospital hospital = userDoctor.getHospital();
+    
+    DoctorProfileDTO profileDTO = new DoctorProfileDTO();
+    profileDTO.setFirstName(userDoctor.getFirstName());
+    profileDTO.setLastName(userDoctor.getLastName());
+    profileDTO.setUserName(userDoctor.getUserName());
+    profileDTO.setEmail(userDoctor.getEmail());
+    profileDTO.setSpeciality(userDoctor.getSpeciality());
+    profileDTO.setPhoneNumber(userDoctor.getPhoneNumber());
+    profileDTO.setAddressDTO(fromAddressToAddressDTO(userDoctor.getAddress()));
+    profileDTO.setHospitalName(hospital.getName());
+    profileDTO.setHospitalEmail(hospital.getEmail());
+
+    return profileDTO;
   }
 }

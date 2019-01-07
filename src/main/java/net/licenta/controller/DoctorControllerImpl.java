@@ -25,6 +25,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.licenta.model.dto.DoctorProfileDTO;
 import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.service.DoctorService;
@@ -116,8 +117,17 @@ public class DoctorControllerImpl implements DoctorController {
   @Override
   public ResponseEntity<PrescriptionDoctorHospitalDTO> getDoctorAndHospitalforAutocomplete(@RequestParam("userName") String userName) {
     return doctorService.getDoctorAndHospitalforAutocomplete(userName).map(entity -> {
-      log.info("Returned autocomplete prescription with fields: ", entity);
+      log.info("Returned autocomplete prescription with fields: {}", entity);
       return new ResponseEntity<>(entity, HttpStatus.OK);
     }).orElseGet(() -> new ResponseEntity<PrescriptionDoctorHospitalDTO>(HttpStatus.NOT_FOUND));
+  }
+
+  @GetMapping("/profile")
+  @Override
+  public ResponseEntity<DoctorProfileDTO> getDoctorProfile(@RequestParam("userName") String userName) {
+    return doctorService.getDoctorProfile(userName).map(entity -> {
+      log.info("Returned doctor profile with fields: {}", entity);
+      return new ResponseEntity<>(entity, HttpStatus.OK);
+    }).orElseGet(() -> new ResponseEntity<DoctorProfileDTO>(HttpStatus.NOT_FOUND));
   }
 }

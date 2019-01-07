@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.licenta.model.dto.DoctorProfileDTO;
 import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.entity.Prescription;
@@ -21,7 +22,7 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Autowired
   DoctorRepository doctorRepository;
-  
+
   @Autowired
   PrescriptionRepository prescriptionRepository;
 
@@ -68,10 +69,16 @@ public class DoctorServiceImpl implements DoctorService {
   @Override
   public Optional<PrescriptionDoctorHospitalDTO> getDoctorAndHospitalforAutocomplete(String userName) {
     return doctorRepository.findByUserName(userName).map(entity -> {
-      System.out.println("Intra");
-      PrescriptionDoctorHospitalDTO  prescriptionDoctorHospitalDTO = DataModelTransformer.fromDoctorToPrescriptionDoctorHospitalDTO(entity);
+      PrescriptionDoctorHospitalDTO prescriptionDoctorHospitalDTO = DataModelTransformer.fromDoctorToPrescriptionDoctorHospitalDTO(entity);
       prescriptionDoctorHospitalDTO.setPrescriptionNumber(prescriptionRepository.findTopByOrderByIdDesc().map(Prescription::getId).orElseGet(() -> 0L) + 1);
-      System.out.println(prescriptionDoctorHospitalDTO);
+      return Optional.ofNullable(prescriptionDoctorHospitalDTO);
+    }).orElseGet(Optional::empty);
+  }
+
+  @Override
+  public Optional<DoctorProfileDTO> getDoctorProfile(String userName) {
+    return doctorRepository.findByUserName(userName).map(entity -> {
+      DoctorProfileDTO prescriptionDoctorHospitalDTO = DataModelTransformer.fromDoctorToDoctorProfileDTO(entity);
       return Optional.ofNullable(prescriptionDoctorHospitalDTO);
     }).orElseGet(Optional::empty);
   }

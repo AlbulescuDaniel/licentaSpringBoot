@@ -27,4 +27,7 @@ public interface PatientController {
 
   @PreAuthorize("hasAnyAuthority('[{authority=ADM}]')")
   public ResponseEntity<HttpStatus> deleteAllPatients();
+  
+  @PreAuthorize("hasAnyAuthority('[{authority=ADM}]','[{authority=DOC}]','[{authority=PAT}]','[{authority=PHA}]')")
+  public ResponseEntity<UserPatientDTO> getPatientByUsername(String userName);
 }

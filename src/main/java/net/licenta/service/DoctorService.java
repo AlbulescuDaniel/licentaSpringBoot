@@ -3,6 +3,7 @@ package net.licenta.service;
 import java.util.Optional;
 import java.util.Set;
 
+import net.licenta.model.dto.DoctorProfileDTO;
 import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 
@@ -21,4 +22,6 @@ public interface DoctorService {
   public Boolean deleteAllDoctors();
 
   public Optional<PrescriptionDoctorHospitalDTO> getDoctorAndHospitalforAutocomplete(String userName);
+
+  public Optional<DoctorProfileDTO> getDoctorProfile(String userName);
 }
