@@ -1,6 +1,10 @@
 package net.licenta;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +20,7 @@ import net.licenta.model.entity.Address;
 import net.licenta.model.entity.Drug;
 import net.licenta.model.entity.Hospital;
 import net.licenta.model.entity.RoleType;
+import net.licenta.model.entity.Specialization;
 import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.entity.UserGender;
 import net.licenta.model.entity.UserPatient;
@@ -23,6 +28,7 @@ import net.licenta.repository.DoctorRepository;
 import net.licenta.repository.DrugRepository;
 import net.licenta.repository.HospitalRepository;
 import net.licenta.repository.PatientRepository;
+import net.licenta.repository.SpecializationRpository;
 
 @RestController("/test")
 @SpringBootApplication
@@ -33,6 +39,7 @@ public class LicentaApplication {
   private PatientRepository patientRepository;
   private DrugRepository drugRepository;
   private HospitalRepository hospitalRepository;
+  private SpecializationRpository specializationRpository;
 
   public static void main(String[] args) {
     SpringApplication.run(LicentaApplication.class, args);
@@ -70,11 +77,12 @@ public class LicentaApplication {
    * Bean used to insert dummy objects in database
    */
   @Bean
-  CommandLineRunner init(DoctorRepository doctorRepository, PatientRepository patientRepository, DrugRepository drugRepository, HospitalRepository hospitalRepository) {
+  CommandLineRunner init(DoctorRepository doctorRepository, PatientRepository patientRepository, DrugRepository drugRepository, HospitalRepository hospitalRepository, SpecializationRpository specializationRpository) {
     this.doctorRepository = doctorRepository;
     this.patientRepository = patientRepository;
     this.drugRepository = drugRepository;
     this.hospitalRepository = hospitalRepository;
+    this.specializationRpository = specializationRpository;
 
     return args -> {
 
@@ -113,18 +121,18 @@ public class LicentaApplication {
       userPatient.setRoleType(RoleType.PAT);
       
       UserPatient userPatient2 = new UserPatient();
-      userPatient.setId(2L);
-      userPatient.setAddress(address);
-      userPatient.setBirthDate(LocalDate.now().minusYears(20));
-      userPatient.setCnp("1111111111");
-      userPatient.setEmail("patient@patient.com");
-      userPatient.setFirstName("Daniel");
-      userPatient.setGender(UserGender.Male);
-      userPatient.setLastName("Daniel");
-      userPatient.setPassword(bCryptPasswordEncoder.encode("aA1!aaaa"));
-      userPatient.setPhoneNumber("43211");
-      userPatient.setUserName("Daniel.Daniel");
-      userPatient.setRoleType(RoleType.PAT);
+      userPatient2.setId(2L);
+      userPatient2.setAddress(address);
+      userPatient2.setBirthDate(LocalDate.now().minusYears(20));
+      userPatient2.setCnp("1111111111");
+      userPatient2.setEmail("patient@patient.com");
+      userPatient2.setFirstName("Daniel");
+      userPatient2.setGender(UserGender.Male);
+      userPatient2.setLastName("Daniel");
+      userPatient2.setPassword(bCryptPasswordEncoder.encode("aA1!aaaa"));
+      userPatient2.setPhoneNumber("43211");
+      userPatient2.setUserName("Daniel.Daniel");
+      userPatient2.setRoleType(RoleType.PAT);
 
       Drug nurofen200mg = new Drug();
       nurofen200mg.setId(1L);
@@ -273,7 +281,24 @@ public class LicentaApplication {
       hospital.setUrc("001927812");
       hospital.setWebSite("http://www.hospbv.ro/");
       hospital.setEmail("sjbrasov@rdslink.ro");
+      
+      Set<Specialization> specializations = new HashSet<>();
+      specializations.add(new Specialization(1L, "Cardiology"));
+      specializations.add(new Specialization(2L, "Ear nose and throat (ENT)"));
+      specializations.add(new Specialization(3L, "Haematology"));
+      specializations.add(new Specialization(4L, "Microbiology"));
+      specializations.add(new Specialization(5L, "Neurology"));
+      specializations.add(new Specialization(6L, "Oncology"));
+      specializations.add(new Specialization(7L, "Orthopaedics"));
 
+      List<Hospital> hospitalSList = new ArrayList<>();
+      hospitalSList.add(hospital);
+      specializations.forEach(s -> s.setHospitals(hospitalSList));
+      hospital.setSpecializations(specializations);
+      
+      this.specializationRpository.saveAll(specializations);
+      System.out.println("Specializations: " + this.specializationRpository.count());
+      
       this.doctorRepository.save(userDoctor);
       System.out.println("Doctors: " + this.doctorRepository.count());
 

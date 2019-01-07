@@ -7,10 +7,12 @@ import net.licenta.model.dto.CreatePatientDTO;
 import net.licenta.model.dto.DoctorProfileDTO;
 import net.licenta.model.dto.DrugDTO;
 import net.licenta.model.dto.HospitalDTO;
+import net.licenta.model.dto.HospitalWithSpecializationDTO;
 import net.licenta.model.dto.PrescriptionDTO;
 import net.licenta.model.dto.PrescriptionDoctorHospitalDTO;
 import net.licenta.model.dto.PrescriptionDrugDTO;
 import net.licenta.model.dto.PrescriptionWithPatientNameDTO;
+import net.licenta.model.dto.SpecializationDTO;
 import net.licenta.model.dto.UserDoctorDTO;
 import net.licenta.model.dto.UserPatientDTO;
 import net.licenta.model.dto.UserPharmacyDTO;
@@ -19,6 +21,7 @@ import net.licenta.model.entity.Drug;
 import net.licenta.model.entity.Hospital;
 import net.licenta.model.entity.Prescription;
 import net.licenta.model.entity.PrescriptionDrug;
+import net.licenta.model.entity.Specialization;
 import net.licenta.model.entity.UserDoctor;
 import net.licenta.model.entity.UserPatient;
 import net.licenta.model.entity.UserPharmacy;
@@ -238,7 +241,6 @@ public class DataModelTransformer {
   }
 
   public static Prescription fromPrescriptionDTOToPrescription(PrescriptionDTO prescriptionDTO) {
-    System.err.println(prescriptionDTO.toString());
     Prescription prescription = new Prescription();
     prescription.setId(prescriptionDTO.getId());
     prescription.setDiagnostic(prescriptionDTO.getDiagnostic());
@@ -340,5 +342,40 @@ public class DataModelTransformer {
     profileDTO.setHospitalEmail(hospital.getEmail());
 
     return profileDTO;
+  }
+  
+  public static SpecializationDTO fromSpecializationToSpecializationDTO(Specialization specialization) {
+    return new SpecializationDTO(specialization.getName());
+  }
+  
+  public static Specialization fromSpecializationDTOToSpecialization(SpecializationDTO specialization) {
+    return new Specialization(specialization.getName());
+  }
+  
+  public static HospitalWithSpecializationDTO fromHospitalToHospitalWithSpecializationDTO(Hospital hospital) {
+    HospitalWithSpecializationDTO hospitalWithSpecializationDTO = new HospitalWithSpecializationDTO();
+    hospitalWithSpecializationDTO.setId(hospital.getId());
+    hospitalWithSpecializationDTO.setName(hospital.getName());
+    hospitalWithSpecializationDTO.setPhone(hospital.getPhone());
+    hospitalWithSpecializationDTO.setUrc(hospital.getUrc());
+    hospitalWithSpecializationDTO.setAddressDTO(fromAddressToAddressDTO(hospital.getAddress()));
+    hospitalWithSpecializationDTO.setWebSite(hospital.getWebSite());
+    hospitalWithSpecializationDTO.setEmail(hospital.getEmail());
+    hospitalWithSpecializationDTO.setSpecializationDTOs(hospital.getSpecializations().stream().map(s -> fromSpecializationToSpecializationDTO(s)).collect(Collectors.toSet()));
+    
+    return hospitalWithSpecializationDTO;
+  }
+  
+  public static Hospital fromHospitalWithSpecializationDTOToHospital(HospitalWithSpecializationDTO hospitalWithSpecializationDTO) {
+    Hospital hospital = new Hospital();
+    hospital.setId(hospitalWithSpecializationDTO.getId());
+    hospital.setName(hospitalWithSpecializationDTO.getName());
+    hospital.setPhone(hospitalWithSpecializationDTO.getPhone());
+    hospital.setUrc(hospitalWithSpecializationDTO.getUrc());
+    hospital.setAddress(fromAddressDTOToAddress(hospitalWithSpecializationDTO.getAddressDTO()));
+    hospital.setWebSite(hospitalWithSpecializationDTO.getWebSite());
+    hospital.setEmail(hospitalWithSpecializationDTO.getEmail());
+    hospital.setSpecializations(hospitalWithSpecializationDTO.getSpecializationDTOs().stream().map(s -> fromSpecializationDTOToSpecialization(s)).collect(Collectors.toSet()));
+    return hospital;
   }
 }

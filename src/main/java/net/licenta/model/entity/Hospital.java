@@ -7,9 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,6 +46,10 @@ public class Hospital {
 
   @OneToMany(mappedBy = "hospital", cascade = CascadeType.DETACH)
   private Set<UserDoctor> doctors;
+  
+  @ManyToMany(cascade = CascadeType.DETACH , fetch = FetchType.EAGER)
+  @JoinTable(name = "hospital_specialization", joinColumns = @JoinColumn(name = "id_hospital", referencedColumnName = "id_hospital"), inverseJoinColumns = @JoinColumn(name = "id_specialization", referencedColumnName = "id_specialization"))
+  private Set<Specialization> specializations = new HashSet<>();
 
   public Hospital() {
     super();
@@ -110,5 +118,13 @@ public class Hospital {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Set<Specialization> getSpecializations() {
+    return specializations;
+  }
+
+  public void setSpecializations(Set<Specialization> specializations) {
+    this.specializations = specializations;
   }
 }
