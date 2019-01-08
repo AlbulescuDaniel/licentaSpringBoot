@@ -1,6 +1,8 @@
 package net.licenta.model.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -49,7 +51,7 @@ public class Hospital {
   
   @ManyToMany(cascade = CascadeType.DETACH , fetch = FetchType.EAGER)
   @JoinTable(name = "hospital_specialization", joinColumns = @JoinColumn(name = "id_hospital", referencedColumnName = "id_hospital"), inverseJoinColumns = @JoinColumn(name = "id_specialization", referencedColumnName = "id_specialization"))
-  private Set<Specialization> specializations = new HashSet<>();
+  private List<Specialization> specializations = new ArrayList<>();
 
   public Hospital() {
     super();
@@ -120,11 +122,11 @@ public class Hospital {
     this.email = email;
   }
 
-  public Set<Specialization> getSpecializations() {
+  public List<Specialization> getSpecializations() {
     return specializations;
   }
 
-  public void setSpecializations(Set<Specialization> specializations) {
+  public void setSpecializations(List<Specialization> specializations) {
     this.specializations = specializations;
   }
 }

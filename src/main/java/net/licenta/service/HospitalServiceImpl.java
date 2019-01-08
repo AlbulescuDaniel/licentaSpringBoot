@@ -1,5 +1,6 @@
 package net.licenta.service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class HospitalServiceImpl implements HospitalService {
     return hospitals.stream().filter(s -> filterHospitals(s.getSpecializations(), specialization)).map(DataModelTransformer::fromHospitalToHospitalWithSpecializationDTO).collect(Collectors.toSet());
   }
 
-  private Boolean filterHospitals(Set<Specialization> specializations, String specialization) {
+  private Boolean filterHospitals(List<Specialization> specializations, String specialization) {
     if (specialization == null) {
       return true;
     }

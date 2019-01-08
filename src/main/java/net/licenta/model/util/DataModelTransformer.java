@@ -375,7 +375,7 @@ public class DataModelTransformer {
     hospital.setAddress(fromAddressDTOToAddress(hospitalWithSpecializationDTO.getAddressDTO()));
     hospital.setWebSite(hospitalWithSpecializationDTO.getWebSite());
     hospital.setEmail(hospitalWithSpecializationDTO.getEmail());
-    hospital.setSpecializations(hospitalWithSpecializationDTO.getSpecializationDTOs().stream().map(s -> fromSpecializationDTOToSpecialization(s)).collect(Collectors.toSet()));
+    hospital.setSpecializations(hospitalWithSpecializationDTO.getSpecializationDTOs().stream().map(s -> fromSpecializationDTOToSpecialization(s)).collect(Collectors.toList()));
     return hospital;
   }
 }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import net.licenta.model.entity.Specialization;
 
-@Repository
 public interface SpecializationRpository extends JpaRepository<Specialization, Long>{
 
 }

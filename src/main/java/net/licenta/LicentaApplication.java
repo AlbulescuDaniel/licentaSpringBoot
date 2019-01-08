@@ -2,9 +2,7 @@ package net.licenta;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -277,12 +275,12 @@ public class LicentaApplication {
       hospital.setId(1L);
       hospital.setAddress(address);
       hospital.setName("Judetean");
-      hospital.setPhone("0268  320022");
+      hospital.setPhone("0268320022");
       hospital.setUrc("001927812");
       hospital.setWebSite("http://www.hospbv.ro/");
       hospital.setEmail("sjbrasov@rdslink.ro");
       
-      Set<Specialization> specializations = new HashSet<>();
+      List<Specialization> specializations = new ArrayList<>();
       specializations.add(new Specialization(1L, "Cardiology"));
       specializations.add(new Specialization(2L, "Ear nose and throat (ENT)"));
       specializations.add(new Specialization(3L, "Haematology"));
@@ -291,13 +289,12 @@ public class LicentaApplication {
       specializations.add(new Specialization(6L, "Oncology"));
       specializations.add(new Specialization(7L, "Orthopaedics"));
 
+      System.err.println(this.specializationRpository.saveAll(specializations).size());
+      
       List<Hospital> hospitalSList = new ArrayList<>();
       hospitalSList.add(hospital);
       specializations.forEach(s -> s.setHospitals(hospitalSList));
       hospital.setSpecializations(specializations);
-      
-      this.specializationRpository.saveAll(specializations);
-      System.out.println("Specializations: " + this.specializationRpository.count());
       
       this.doctorRepository.save(userDoctor);
       System.out.println("Doctors: " + this.doctorRepository.count());
@@ -310,7 +307,7 @@ public class LicentaApplication {
 
       hospital.getDoctors().add(userDoctor);
       this.hospitalRepository.save(hospital);
-
+      
       this.patientRepository.save(userPatient);
       this.patientRepository.save(userPatient2);
       System.out.println("Patients: " + this.patientRepository.count());
