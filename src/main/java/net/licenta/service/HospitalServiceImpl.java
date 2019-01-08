@@ -21,7 +21,7 @@ public class HospitalServiceImpl implements HospitalService {
 
   @Override
   public Set<HospitalWithSpecializationDTO> findHospitalByFilters(String city, String specialization) {
-    Set<Hospital> hospitals = hospitalRepository.findByAddressCity(city);
+    Set<Hospital> hospitals = hospitalRepository.findByAddressCityIgnoreCase(city);
     return hospitals.stream().filter(s -> filterHospitals(s.getSpecializations(), specialization)).map(DataModelTransformer::fromHospitalToHospitalWithSpecializationDTO).collect(Collectors.toSet());
   }
 

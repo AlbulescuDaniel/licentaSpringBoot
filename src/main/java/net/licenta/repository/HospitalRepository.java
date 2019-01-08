@@ -9,5 +9,5 @@ import net.licenta.model.entity.Hospital;
 
 public interface HospitalRepository  extends JpaRepository<Hospital, Long>{
   
-  public Set<Hospital> findByAddressCity(String city);
+  public Set<Hospital> findByAddressCityIgnoreCase(String city);
 }
