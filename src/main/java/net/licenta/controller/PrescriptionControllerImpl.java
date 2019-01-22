@@ -34,6 +34,8 @@ import net.licenta.model.dto.PrescriptionWithPatientNameDTO;
 import net.licenta.service.PrescriptionService;
 
 @Api(value = "Prescription API")
+
+
 @RestController
 @RequestMapping("/prescriptions")
 public class PrescriptionControllerImpl implements PrescriptionController {
@@ -50,9 +52,12 @@ public class PrescriptionControllerImpl implements PrescriptionController {
   public ResponseEntity<Set<PrescriptionDTO>> getAllPrescriptions() {
     Set<PrescriptionDTO> prescriptionDTOs = prescriptionService.getAllPrescriptions();
     log.info("Returned {} prescriptions", prescriptionDTOs.size());
-    return !CollectionUtils.isEmpty(prescriptionDTOs) ? new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    return !CollectionUtils.isEmpty(prescriptionDTOs) ? 
+        new ResponseEntity<>(prescriptionDTOs, HttpStatus.OK) :
+        new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
+  
   @ApiOperation(value = "Return prescription with the required id.")
   @ApiResponses(value = { @ApiResponse(code = 200, message = "Prescription returned successfully!"),
       @ApiResponse(code = 404, message = "The prescriptions with the required id does not exist.", response = Error.class) })

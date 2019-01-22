@@ -23,6 +23,7 @@ import net.licenta.model.entity.Drug;
 import net.licenta.model.entity.Hospital;
 import net.licenta.model.entity.Prescription;
 import net.licenta.model.entity.PrescriptionDrug;
+import net.licenta.model.entity.UserPatient;
 import net.licenta.model.util.DataModelTransformer;
 import net.licenta.repository.DoctorRepository;
 import net.licenta.repository.DrugRepository;
@@ -146,17 +147,22 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     Set<PrescriptionWithPatientNameDTO> prescriptionWithPatientNameDTOs = new HashSet<>();
 
-    patientRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContainingOrderByFirstNameAsc(firstName, lastName)
-        .forEach(patient -> prescriptionRepository.findByPatientAndDatePrescriptedBetweenOrderByDatePrescriptedAscIdAsc(patient, startDate, endDate).forEach(prescription -> {
-          PrescriptionWithPatientNameDTO prescriptionWithPatientNameDTO = DataModelTransformer.fromPrescriptionToPrescriptionWithPatientNameDTO(prescription);
-          prescriptionWithPatientNameDTO.setPatientFirstName(patient.getFirstName());
-          prescriptionWithPatientNameDTO.setPatientLastName(patient.getLastName());
-          prescriptionWithPatientNameDTO.setBirthDate(patient.getBirthDate());
-          prescriptionWithPatientNameDTOs.add(prescriptionWithPatientNameDTO);
-        }));
+    List<UserPatient> patients = patientRepository.findByFirstNameIgnoreCaseContainingAndLastNameIgnoreCaseContainingOrderByFirstNameAsc(firstName, lastName);
+
+    if (patients.size() == 0) {
+      throw new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, "1");
+    }
+
+    patients.forEach(patient -> prescriptionRepository.findByPatientAndDatePrescriptedBetweenOrderByDatePrescriptedAscIdAsc(patient, startDate, endDate).forEach(prescription -> {
+      PrescriptionWithPatientNameDTO prescriptionWithPatientNameDTO = DataModelTransformer.fromPrescriptionToPrescriptionWithPatientNameDTO(prescription);
+      prescriptionWithPatientNameDTO.setPatientFirstName(patient.getFirstName());
+      prescriptionWithPatientNameDTO.setPatientLastName(patient.getLastName());
+      prescriptionWithPatientNameDTO.setBirthDate(patient.getBirthDate());
+      prescriptionWithPatientNameDTOs.add(prescriptionWithPatientNameDTO);
+    }));
 
     if (prescriptionWithPatientNameDTOs.isEmpty()) {
-      throw new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_USER_DO_NOT_FOUND));
+      throw new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, "0");
     }
 
     return prescriptionWithPatientNameDTOs;
@@ -164,20 +170,25 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
   @Override
   public Set<PrescriptionWithPatientNameDTO> getPatientPrescriptionsByPatientFirstName(String firstName, LocalDate startDate, LocalDate endDate) {
-    
+
     Set<PrescriptionWithPatientNameDTO> prescriptionWithPatientNameDTOs = new HashSet<>();
 
-    patientRepository.findByFirstNameIgnoreCaseContainingOrderByFirstNameAsc(firstName)
-        .forEach(patient -> prescriptionRepository.findByPatientAndDatePrescriptedBetweenOrderByDatePrescriptedAscIdAsc(patient, startDate, endDate).forEach(prescription -> {
-          PrescriptionWithPatientNameDTO prescriptionWithPatientNameDTO = DataModelTransformer.fromPrescriptionToPrescriptionWithPatientNameDTO(prescription);
-          prescriptionWithPatientNameDTO.setPatientFirstName(patient.getFirstName());
-          prescriptionWithPatientNameDTO.setPatientLastName(patient.getLastName());
-          prescriptionWithPatientNameDTO.setBirthDate(patient.getBirthDate());
-          prescriptionWithPatientNameDTOs.add(prescriptionWithPatientNameDTO);
-        }));
+    List<UserPatient> patients = patientRepository.findByFirstNameIgnoreCaseContainingOrderByFirstNameAsc(firstName);
+
+    if (patients.size() == 0) {
+      throw new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, "1");
+    }
+
+    patients.forEach(patient -> prescriptionRepository.findByPatientAndDatePrescriptedBetweenOrderByDatePrescriptedAscIdAsc(patient, startDate, endDate).forEach(prescription -> {
+      PrescriptionWithPatientNameDTO prescriptionWithPatientNameDTO = DataModelTransformer.fromPrescriptionToPrescriptionWithPatientNameDTO(prescription);
+      prescriptionWithPatientNameDTO.setPatientFirstName(patient.getFirstName());
+      prescriptionWithPatientNameDTO.setPatientLastName(patient.getLastName());
+      prescriptionWithPatientNameDTO.setBirthDate(patient.getBirthDate());
+      prescriptionWithPatientNameDTOs.add(prescriptionWithPatientNameDTO);
+    }));
 
     if (prescriptionWithPatientNameDTOs.isEmpty()) {
-      throw new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, ResourceBundle.getBundle(Constants.MESSAGE_BUNDLE).getString(Constants.BUNDLE_USER_DO_NOT_FOUND));
+      throw new ErrorDetailsNotFound(LocalDateTime.now(), Constants.NOT_FOUND, "0");
     }
 
     return prescriptionWithPatientNameDTOs;

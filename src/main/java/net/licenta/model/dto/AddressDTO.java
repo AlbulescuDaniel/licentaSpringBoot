@@ -10,28 +10,28 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class AddressDTO implements Comparable<AddressDTO> {
 
-   @Pattern(regexp ="^\\b(?!.*?\\s{2})[A-Za-z ]{2,100}\\b$", message ="{address.countryName.format}")
-   @NotNull(message = "{address.countryName.notNull}")
+  @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z ]{2,100}\\b$", message = "{address.countryName.format}")
+  @NotNull(message = "{address.countryName.notNull}")
   private String countryName;
 
-   @Pattern(regexp = "^\\d{5}$|^\\d{5}$|^\\d{5}(-\\d{4})?$", message = "{address.postalCode.format}")
-   @NotNull(message = "{address.postalCode.notNull}")
+  @Pattern(regexp = "^\\d{5}$|^\\d{5}$|^\\d{5}(-\\d{4})?$", message = "{address.postalCode.format}")
+  @NotNull(message = "{address.postalCode.notNull}")
   private String postalCode;
 
-   @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z ]{2,64}\\b$", message = "{address.city.format}")
-   @NotNull(message = "{address.city.notNull}")
+  @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z ]{2,64}\\b$", message = "{address.city.format}")
+  @NotNull(message = "{address.city.notNull}")
   private String city;
 
-   @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z ]{2,64}\\b$", message = "{address.region.format}")
-   @NotNull(message = "{address.region.notNull}")
+  @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z ]{2,64}\\b$", message = "{address.region.format}")
+  @NotNull(message = "{address.region.notNull}")
   private String region;
 
-   @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z0-9 ]{2,64}\\b$", message = "{address.street.format}")
-   @NotNull(message = "{address.street.notNull}")
+  @Pattern(regexp = "^\\b(?!.*?\\s{2})[A-Za-z0-9 ]{2,64}\\b$", message = "{address.street.format}")
+  @NotNull(message = "{address.street.notNull}")
   private String street;
 
-   @Pattern(regexp = "^[A-Za-z0-9]{1,5}$", message = "{address.streetNumber.format}")
-   @NotNull(message = "{address.streetNumber.notNull}")
+  @Pattern(regexp = "^[A-Za-z0-9]{1,5}$", message = "{address.streetNumber.format}")
+  @NotNull(message = "{address.streetNumber.notNull}")
   private String streetNumber;
 
   @Override
